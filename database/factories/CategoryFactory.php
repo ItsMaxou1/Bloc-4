@@ -11,6 +11,7 @@ class CategoryFactory extends Factory
     {
         return [
             'nom' => $this->faker->word,
+            'description' => fake()->sentence(nbWords: 12),
         ];
     }
 }

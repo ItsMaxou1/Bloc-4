@@ -3,11 +3,7 @@
 use App\Http\Controllers\Admin\AdminProductController;
 use Illuminate\Support\Facades\Route;
 
+Route::get('/', [AdminProductController::class, 'index']);
 
-// Admin routes
-
-Route::prefix('admin')->name('admin.')->group(function () {
-    Route::resource('products', AdminProductController::class);
-});
 
 

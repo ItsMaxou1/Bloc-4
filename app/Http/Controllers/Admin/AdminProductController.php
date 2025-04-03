@@ -1,47 +1,29 @@
 <?php
 namespace App\Http\Controllers\Admin;
 
+use App\Models\Category;
 use App\Models\Product;
-use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\ProductStoreRequest;
 
 class AdminProductController extends Controller
 {
     public function index()
     {
-        $products = Product::with(['category', 'brand'])->get();
-        return view('admin.products.index', compact('products'));
+        // Récupérer toutes les catégories pour afficher les boutons
+        $categories = Category::all();
+
+        return response()->json(['categories' => $categories], 200);
     }
 
-    public function create()
+    public function store(ProductStoreRequest $request)
     {
+        $validated = $request->validated();
+        $validated['available'] = isset($validated['available']);
+        $validated['cover'] = "https://blog.tubikstudio.com/wp-content/uploads/2019/03/cover-1.png";
+        $product = Product::create($validated);
 
+        return response()->json($product, 201);
     }
 
-    public function store(Request $request)
-    {
-        $request->validate([
-            'name' => 'required',
-            'price' => 'required|numeric',
-        ]);
-
-    }
-
-    public function edit(Product $product)
-    {
-
-    }
-
-    public function update(Request $request, Product $product)
-    {
-        $request->validate([
-            'name' => 'required',
-            'price' => 'required|numeric',
-        ]);
-    }
-
-    public function destroy(Product $product)
-    {
-
-    }
 }

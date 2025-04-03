@@ -52,32 +52,4 @@ class User extends Authenticatable
     {
         return $this->hasMany(Product::class);
     }
-
-    public function orders()
-    {
-        return $this->hasMany(Order::class);
-    }
-
-    public function payments()
-    {
-        return $this->hasManyThrough(Payment::class, Order::class);
-    }
-
-    public function orderItems()
-    {
-        return $this->hasManyThrough(OrderItem::class, Order::class);
-    }
-
-    // Si tu as une table 'addresses' pour gérer les adresses des utilisateurs
-    public function addresses()
-    {
-        return $this->hasMany(Address::class);
-    }
-
-    // Relation avec les feedbacks
-    public function feedbacks()
-    {
-        return $this->hasMany(Feedback::class);
-    }
-
 }

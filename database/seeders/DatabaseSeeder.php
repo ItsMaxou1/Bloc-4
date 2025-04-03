@@ -8,7 +8,6 @@ use Illuminate\Database\Seeder;
 use App\Models\Product;
 use App\Models\Category;
 use App\Models\Brand;
-use App\Models\ProductVariant;
 
 class DatabaseSeeder extends Seeder
 {
@@ -28,13 +27,7 @@ class DatabaseSeeder extends Seeder
         // Création des catégories et marques
         Category::factory(10)->create();
         Brand::factory(10)->create();
-
-        // Création des produits avec leurs variantes
-        Product::factory(30)->create()->each(function ($product) {
-            ProductVariant::factory()->create([
-                'product_id' => $product->id
-            ]);
-        });
+        Product::factory(10)->create();
 
     }
 }
