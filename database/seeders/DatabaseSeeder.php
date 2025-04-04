@@ -3,7 +3,6 @@
 namespace Database\Seeders;
 
 use App\Models\User;
-// use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use App\Models\Product;
 use App\Models\Category;
@@ -19,15 +18,21 @@ class DatabaseSeeder extends Seeder
         // User::factory(10)->create();
 
         User::factory()->create([
-            'name' => 'Test User',
-            'email' => 'test@example.com',
+            'name' => 'Admin',
+            'email' => 'admin@gmail.com',
+            'password' => bcrypt('admin'),
+            'role' => 'admin',
+            'remember_token' => null,
+            'email_verified_at' => now(),
         ]);
 
 
         // Création des catégories et marques
+        User::factory(10)->create();
         Category::factory(10)->create();
-        Brand::factory(10)->create();
         Product::factory(10)->create();
+        Brand::factory(10)->create();
+
 
     }
 }

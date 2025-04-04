@@ -20,4 +20,10 @@ class Product extends Model
     {
         return $this->belongsTo(Brand::class);
     }
+
+    // Définir la relation avec ProductVariants
+    public function productVariants()
+    {
+        return $this->hasMany(ProductVariants::class);
+    }
 }

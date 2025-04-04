@@ -20,8 +20,7 @@ class User extends Authenticatable
     protected $fillable = [
         'name',
         'email',
-        'password',
-        'phone_number',  // Nouveau champ pour le téléphone
+        'password', // Nouveau champ pour le téléphone
         'role',          // Exemple de rôle (admin, client, etc.)
     ];
 

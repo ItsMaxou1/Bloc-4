@@ -18,7 +18,7 @@ return new class extends Migration {
             $table->decimal('alcool_volume', 5, 2);
             $table->foreignId('category_id')->constrained()->onDelete('cascade');
             $table->foreignId('brand_id')->constrained()->onDelete('cascade');
-            $table->string('image_url')->nullable();
+            $table->string('image_url');
             $table->timestamps();
         });
     }
