@@ -24,6 +24,6 @@ class Product extends Model
     // Définir la relation avec ProductVariants
     public function productVariants()
     {
-        return $this->hasMany(ProductVariants::class);
+        return $this->hasMany(ProductVariant::class);
     }
 }

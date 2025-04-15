@@ -7,6 +7,8 @@ use Illuminate\Database\Seeder;
 use App\Models\Product;
 use App\Models\Category;
 use App\Models\Brand;
+use Database\Seeders\ProductVariantSeeder;
+
 
 class DatabaseSeeder extends Seeder
 {
@@ -33,6 +35,8 @@ class DatabaseSeeder extends Seeder
         Product::factory(10)->create();
         Brand::factory(10)->create();
 
-
+        $this->call([
+            ProductVariantSeeder::class,
+        ]);
     }
 }
