@@ -71,6 +71,14 @@
     border-radius: 50%;
 }
 
+
+.dashboard-cards {
+    margin-top: 2%;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1.5rem;
+    margin-bottom: 2rem;
+}
 /* Cards */
 .stats-cards {
     display: grid;
@@ -102,17 +110,17 @@
     color: #999;
 }
 
-/* Graphs */
-.graphs {
+.product-grid {
     display: grid;
-    grid-template-columns: 2fr 1fr;
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
     gap: 1.5rem;
 }
 
-.graph-card {
-    background: white;
-    padding: 2rem;
-    border-radius: 12px;
-    height: 250px;
-    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+.product-grid .card {
+    transition: transform 0.2s;
 }
+
+.product-grid .card:hover {
+    transform: translateY(-5px);
+}
+
