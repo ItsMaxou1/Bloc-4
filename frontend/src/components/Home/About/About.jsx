@@ -1,8 +1,8 @@
 import React from "react";
 import "./About.css";
-import diamant from "../../assets/images/About/gemmes.png";
-import livraison from "../../assets/images/About/livraison-rapide.png";
-import cart from "../../assets/images/About/carte-de-credit.png";
+import diamant from "../../../assets/images/About/gemmes.png";
+import livraison from "../../../assets/images/About/livraison-rapide.png";
+import cart from "../../../assets/images/About/carte-de-credit.png";
 
 const About = () => {
     return (

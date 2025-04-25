@@ -1,12 +1,12 @@
 import React, { useState } from "react";
 import "./Navbar.css";
-import Search from "../../assets/images/Navbar/chercher.png";
-import Panier from "../../assets/images/Navbar/paniers.png";
-import User from "../../assets/images/Navbar/utilisateur.png";
-import Logo from "../../assets/images/Navbar/Logo.png";
-import SearchHover from "../../assets/images/Navbar/chercher-hover.svg";
-import PanierHover from "../../assets/images/Navbar/paniers-hover.svg";
-import UserHover from "../../assets/images/Navbar/utilisateur-hover.svg";
+import Search from "../../../assets/images/Navbar/chercher.png";
+import Panier from "../../../assets/images/Navbar/paniers.png";
+import User from "../../../assets/images/Navbar/utilisateur.png";
+import Logo from "../../../assets/images/Navbar/Logo.png";
+import SearchHover from "../../../assets/images/Navbar/chercher-hover.svg";
+import PanierHover from "../../../assets/images/Navbar/paniers-hover.svg";
+import UserHover from "../../../assets/images/Navbar/utilisateur-hover.svg";
 
 const Navbar = () => {
     const [searchIcon, setSearchIcon] = useState(Search);

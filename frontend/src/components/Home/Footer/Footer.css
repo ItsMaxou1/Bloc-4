@@ -1,0 +1,43 @@
+.footer {
+    background-color: #282c34;
+    color: white;
+    padding: 2em 0;
+    margin-top: 10em;
+    text-align: center;
+}
+
+
+.footer-links{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 2em;
+}
+
+.footer-links a {
+    font-size: 1.2em;
+    margin: 0 2em;
+    position: relative;
+    display: inline-block;
+    color: inherit;
+}
+
+.footer-links a::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    bottom: -3px;
+    width: 0;
+    height: 2px;
+    background-color: #FFD700;
+    transition: width 0.3s ease-in-out;
+}
+
+
+.footer-links a:hover::after {
+    width: 100%;
+}
+
+.footer p {
+    margin-bottom: 2em;
+}

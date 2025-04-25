@@ -33,11 +33,11 @@
 }
 
 .container-left::before {
-    background-image: url(../../assets/images/Favoris/nouveauté.jpg);
+    background-image: url(../../../assets/images/Favoris/nouveauté.jpg);
 }
 
 .container-right::before {
-    background-image: url(../../assets/images/Favoris/mousstache.jpg);
+    background-image: url(../../../assets/images/Favoris/mousstache.jpg);
 }
 
 .container-left h2,

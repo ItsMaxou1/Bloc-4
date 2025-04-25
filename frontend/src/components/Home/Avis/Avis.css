@@ -1,0 +1,52 @@
+.flex-avis img {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+}
+
+.stars img {
+    width: 20px;
+    height: 20px;
+    margin-top: 5%;
+}
+
+.name {
+    font-size: 20px;
+    font-weight: bold;
+    display: flex;
+    align-items: baseline;
+    gap: 20px;
+}
+
+.avis-top {
+    width: 400px;
+}
+
+.stars {
+    display: flex;
+    gap: 5px;
+}
+
+.avis2,
+.avis3,
+.avis1 {
+    border: 1px solid black;
+    padding: 1.5%;
+    border-radius: 25px;
+}
+
+.flex-avis {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    margin: 2em;
+}
+
+.name {
+    border-bottom: 1px solid black;
+    padding-bottom: 15px;
+}
+
+.avis-top p{
+    margin-top: 5%;
+}
