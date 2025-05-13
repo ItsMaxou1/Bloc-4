@@ -9,6 +9,16 @@ class Product extends Model
 {
     use HasFactory;
 
+    protected $fillable = [
+        'name',
+        'short_description',
+        'description',
+        'alcool_volume',
+        'category_id',
+        'brand_id',
+        'image_url',
+    ];
+
     // Définir la relation avec Category
     public function category()
     {

@@ -24,6 +24,17 @@ class ProductStoreRequest extends FormRequest
         return [
             'name' => ['required', 'string', 'min:2', 'max:255'],
             'short_description' => ['required', 'string'],
+            'category_id' => ['required', 'exists:categories,id'],
+            'brand_id' => ['nullable', 'exists:brands,id'],
+            'available' => ['nullable', 'boolean'],
+
+            // Variants
+            'variants' => ['nullable', 'array'],
+            'variants.*.id' => ['nullable', 'exists:product_variants,id'],
+            'variants.*.format' => ['required', 'string'],
+            'variants.*.price' => ['required', 'numeric', 'min:0'],
+            'variants.*.stock' => ['required', 'integer', 'min:0'],
         ];
     }
+
 }
