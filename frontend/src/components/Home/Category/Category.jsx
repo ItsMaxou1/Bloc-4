@@ -1,11 +1,11 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
 import "./Category.css";
-import image1 from "../../assets/images/Categories/blonde.jpg";
-import image2 from "../../assets/images/Categories/brune.jpg";
-import image3 from "../../assets/images/Categories/rousse.jpg";
-import image4 from "../../assets/images/Categories/ipa.jpg";
-import image5 from "../../assets/images/Categories/provisoire.jpg";
+import image1 from "../../../assets/images/Categories/blonde.jpg";
+import image2 from "../../../assets/images/Categories/brune.jpg";
+import image3 from "../../../assets/images/Categories/rousse.jpg";
+import image4 from "../../../assets/images/Categories/ipa.jpg";
+import image5 from "../../../assets/images/Categories/provisoire.jpg";
 
 const categories = [
     {

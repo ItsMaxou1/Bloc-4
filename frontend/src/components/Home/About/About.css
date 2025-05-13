@@ -19,7 +19,7 @@
 .delivery,
 .cart {
     width: 400px;
-    height: 220px;
+    height: 235px;
     border-radius: 25px;
     display: flex;
     flex-direction: column;

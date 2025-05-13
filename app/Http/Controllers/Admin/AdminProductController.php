@@ -159,6 +159,9 @@ namespace App\Http\Controllers\Admin;
 
 use App\Models\Category;
 use App\Models\ProductVariant; // Importer le modèle ProductVariant
+use App\Models\Order;
+use App\Models\Session;
+use App\Models\User;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\ProductStoreRequest;
 use Illuminate\Http\Request;
@@ -203,19 +206,29 @@ class AdminProductController extends Controller
 
     public function dashboard()
     {
-        // Exemple : Répartition des ventes par format
+        // Récupérer les données nécessaires
+        $totalRevenue = Order::sum('total_included_tax'); // Revenu total des commandes
+        $ordersCount = Order::count(); // Nombre total de commandes
+        $activeSessions = Session::where('last_activity', '>=', now()->subMinutes(30))->count(); // Sessions actives (dernières 30 minutes)
+        $totalSessions = Session::count(); // Nombre total de sessions
+        $usersCount = User::count(); // Nombre total d'utilisateurs inscrits
+
+        // Répartition des ventes par format (si nécessaire)
         $salesByFormat = ProductVariant::selectRaw('format, sum(price) as sales')
             ->groupBy('format')
             ->get();
 
+        // Passer les données à la vue
         return view('admin.welcome', [
-            'totalRevenue' => ProductVariant::sum('price'),
-            'ordersCount' => 1056,
-            'activeSessions' => 56,
-            'totalSessions' => 120,
-            'salesByFormat' => $salesByFormat, // Passer les données des ventes par format
+            'totalRevenue' => $totalRevenue,
+            'ordersCount' => $ordersCount,
+            'activeSessions' => $activeSessions,
+            'totalSessions' => $totalSessions,
+            'usersCount' => $usersCount,
+            'salesByFormat' => $salesByFormat,
         ]);
     }
+
 
 
 }

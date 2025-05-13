@@ -2,9 +2,9 @@ import React from "react";
 import { useNavigate } from "react-router-dom"; // Import React Router
 import "react-slideshow-image/dist/styles.css";
 import { Fade } from "react-slideshow-image";
-import image1 from "../../assets/images/Slider/image1.jpg";
-import image2 from "../../assets/images/Slider/image2.jpg";
-import image3 from "../../assets/images/Slider/image3.jpg";
+import image1 from "../../../assets/images/Slider/image1.jpg";
+import image2 from "../../../assets/images/Slider/image2.jpg";
+import image3 from "../../../assets/images/Slider/image3.jpg";
 
 const slideImages = [
     {

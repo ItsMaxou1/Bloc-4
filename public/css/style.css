@@ -17,11 +17,15 @@
     background: #ffffff;
     padding: 2rem 1rem;
     border-right: 1px solid #e5e7eb;
+    box-shadow: 4px 0 10px rgba(0, 0, 0, 0.05);
 }
 
 .sidebar h2 {
     margin-bottom: 2rem;
     text-align: center;
+    color: #333;
+    font-size: 1.5rem;
+    font-weight: 600;
 }
 
 .sidebar ul {
@@ -39,6 +43,7 @@
     display: block;
     border-radius: 8px;
     transition: 0.3s;
+    font-size: 1rem;
 }
 
 .sidebar a.active,
@@ -47,7 +52,7 @@
     color: #0284c7;
 }
 
-/* Main */
+/* Main Content */
 .main-content {
     flex: 1;
     padding: 2rem;
@@ -67,11 +72,19 @@
     gap: 1rem;
 }
 
-.user-info img {
-    border-radius: 50%;
+.user-info span {
+    font-size: 1.2rem;
+    font-weight: bold;
+    color: #333;
 }
 
+.user-info img {
+    border-radius: 50%;
+    width: 50px;
+    height: 50px;
+}
 
+/* Dashboard Cards */
 .dashboard-cards {
     margin-top: 2%;
     display: grid;
@@ -79,7 +92,8 @@
     gap: 1.5rem;
     margin-bottom: 2rem;
 }
-/* Cards */
+
+/* Stats Cards */
 .stats-cards {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
@@ -92,6 +106,11 @@
     border-radius: 12px;
     padding: 1.5rem;
     box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+    transition: transform 0.3s ease-in-out;
+}
+
+.card:hover {
+    transform: translateY(-10px);
 }
 
 .card h3 {
@@ -124,3 +143,132 @@
     transform: translateY(-5px);
 }
 
+/* Additional Enhancements */
+.card-header {
+    font-size: 1.2rem;
+    font-weight: 600;
+    color: #0284c7;
+    margin-bottom: 1rem;
+}
+
+.card-body {
+    font-size: 1rem;
+    color: #555;
+}
+
+.card-footer {
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.875rem;
+    color: #999;
+    margin-top: 1rem;
+}
+
+.card-footer .view-more {
+    text-decoration: none;
+    color: #0284c7;
+    font-weight: 600;
+    transition: color 0.3s;
+}
+
+.card-footer .view-more:hover {
+    color: #555;
+}
+
+    /* Tableau */
+    table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 2rem;
+        background-color: #fff;
+        border-radius: 8px;
+        overflow: hidden;
+    }
+    
+    table th, table td {
+        padding: 1rem;
+        text-align: left;
+        font-size: 1rem;
+        color: #555;
+        border-bottom: 1px solid #e5e7eb;
+    }
+    
+    table th {
+        background-color: #0284c7;
+        color: white;
+        font-weight: bold;
+    }
+    
+    table tr:hover {
+        background-color: #f0f9ff;
+    }
+    
+    table td {
+        font-weight: 500;
+    }
+    
+    table .sales-column {
+        font-weight: bold;
+        color: #0284c7;
+    }
+    
+    table .sales-column:hover {
+        color: #0369a1;
+    }
+    
+    /* Table Responsiveness */
+    @media (max-width: 768px) {
+        table th, table td {
+            padding: 0.8rem;
+            font-size: 0.9rem;
+        }
+    
+        table {
+            margin-top: 1rem;
+        }
+    }
+
+/* Responsive Design */
+@media (max-width: 1200px) {
+    .dashboard-cards {
+        grid-template-columns: repeat(3, 1fr);
+    }
+
+    .stats-cards {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .sidebar {
+        width: 180px;
+    }
+
+    .user-info span {
+        font-size: 1rem;
+    }
+}
+
+@media (max-width: 768px) {
+    .dashboard-cards {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .stats-cards {
+        grid-template-columns: 1fr;
+    }
+
+    .sidebar {
+        width: 100%;
+        padding: 1rem;
+    }
+
+    .user-info {
+        justify-content: flex-start;
+        gap: 0.5rem;
+    }
+
+    .user-info img {
+        width: 40px;
+        height: 40px;
+    }
+
+}

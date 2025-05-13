@@ -15,7 +15,7 @@
             <h2>🍺 Admin</h2>
             <nav>
                 <ul>
-                    <li><a href="#" class="active">Dashboard</a></li>
+                    <li><a href="{{ route('admin.welcome') }}" class="active">Dashboard</a></li>
                     <li><a href="{{ route('admin.products.index') }}">Produits</a></li>
                     <li><a href="#">Catégories</a></li>
                 </ul>
@@ -27,35 +27,66 @@
             <!-- Header -->
             <header class="topbar">
                 <div class="user-info">
-                    <span>Bienvenue Admin</span>
-                    <img src="https://via.placeholder.com/30" alt="User">
+                    <span>Bienvenue {{ Auth::check() ? Auth::user()->name : 'invité' }}</span>
+                    <img src="{{ asset('assets/images/pp1.webp') }}" alt="User" width="50" height="50">
                 </div>
             </header>
 
-            <!-- Cards -->
+            <!-- Dashboard Stats -->
             <h1>Dashboard</h1>
-
             <div class="dashboard-cards">
+                <!-- Revenu Total -->
                 <div class="card">
-                    <h3>Total Revenue</h3>
+                    <h3>Revenu Total</h3>
                     <p>{{ $totalRevenue }} €</p>
                 </div>
+
+                <!-- Nombre de Commandes -->
                 <div class="card">
-                    <h3>Orders</h3>
+                    <h3>Commandes</h3>
                     <p>{{ $ordersCount }}</p>
                 </div>
+
+                <!-- Sessions Actives -->
                 <div class="card">
-                    <h3>Active Sessions</h3>
+                    <h3>Sessions Actives</h3>
                     <p>{{ $activeSessions }}</p>
                 </div>
+
+                <!-- Total des Sessions -->
                 <div class="card">
-                    <h3>Total Sessions</h3>
+                    <h3>Total des Sessions</h3>
                     <p>{{ $totalSessions }}</p>
                 </div>
+
+                <!-- Nombre d'Utilisateurs -->
+                <div class="card">
+                    <h3>Utilisateurs Inscrits</h3>
+                    <p>{{ $usersCount }}</p>
+                </div>
             </div>
+
+            <!-- Répartition des Ventes par Format -->
+            <h2>Ventes par Format</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Format</th>
+                        <th>Ventes Totales</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach($salesByFormat as $sale)
+                        <tr>
+                            <td>{{ $sale->format }}</td>
+                            <td>{{ $sale->sales }} €</td>
+                        </tr>
+                    @endforeach
+                </tbody>
+            </table>
+
         </main>
     </div>
 </body>
-
 
 </html>

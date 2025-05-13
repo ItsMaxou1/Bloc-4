@@ -2,14 +2,14 @@ import React from "react";
 import "./Products.css";
 
 // Importation des images locales
-import imageBiereBlonde1 from "../../assets/images/Products/biere-blonde-1.jpg";
-import imageBiereBlonde2 from "../../assets/images/Products/biere-blonde-2.jpg";
-import imageBiereBrune1 from "../../assets/images/Products/biere-brune-1.jpg";
-import imageBiereBrune2 from "../../assets/images/Products/biere-brune-2.jpg";
-import imageBiereRousse1 from "../../assets/images/Products/biere-rousse-1.jpg";
-import imageBiereRousse2 from "../../assets/images/Products/biere-rousse-2.jpg";
-import imageBiereIPA1 from "../../assets/images/Products/biere-IPA-1.jpg";
-import imageBiereIPA2 from "../../assets/images/Products/biere-IPA-2.jpg";
+import imageBiereBlonde1 from "../../../assets/images/Products/biere-blonde-1.jpg";
+import imageBiereBlonde2 from "../../../assets/images/Products/biere-blonde-2.jpg";
+import imageBiereBrune1 from "../../../assets/images/Products/biere-brune-1.jpg";
+import imageBiereBrune2 from "../../../assets/images/Products/biere-brune-2.jpg";
+import imageBiereRousse1 from "../../../assets/images/Products/biere-rousse-1.jpg";
+import imageBiereRousse2 from "../../../assets/images/Products/biere-rousse-2.jpg";
+import imageBiereIPA1 from "../../../assets/images/Products/biere-IPA-1.jpg";
+import imageBiereIPA2 from "../../../assets/images/Products/biere-IPA-2.jpg";
 
 // Liste des produits avec images locales
 const products = [
