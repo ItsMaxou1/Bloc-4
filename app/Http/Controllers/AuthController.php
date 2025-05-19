@@ -19,7 +19,7 @@ class AuthController extends Controller
             'name' => $request->name,
             'email' => $request->email,
             'password' => Hash::make($request->password),
-            'role' => 'user', // 👈 rôle par défaut
+            'role' => 'user',
         ]);
 
         return response()->json(['message' => 'Compte utilisateur créé avec succès !']);
