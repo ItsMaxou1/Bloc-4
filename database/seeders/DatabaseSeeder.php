@@ -30,13 +30,13 @@ class DatabaseSeeder extends Seeder
 
 
         // Création des catégories et marques
-        User::factory(10)->create();
-        Category::factory(10)->create();
-        Product::factory(10)->create();
-        Brand::factory(10)->create();
+        // User::factory(10)->create();
+        // Category::factory(10)->create();
+        // Product::factory(10)->create();
+        // Brand::factory(10)->create();
 
-        $this->call([
-            ProductVariantSeeder::class,
-        ]);
+        // $this->call([
+        //     ProductVariantSeeder::class,
+        // ]);
     }
 }

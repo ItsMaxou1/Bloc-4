@@ -1,5 +1,5 @@
 <?php
-namespace App\Http\Controllers\Admin;
+namespace App\Http\Controllers\Api;
 
 use App\Models\Category;
 use App\Http\Controllers\Controller;
@@ -8,10 +8,10 @@ class CategoryController extends Controller
 {
     public function index()
     {
-        // Récupérer toutes les catégories pour afficher les boutons
+        // Récupérer toutes les catégories
         $categories = Category::all();
 
-        return response()->json(['categories' => $categories], 200);
+        // Retourner directement le tableau JSON, sans wrapper ["categories" => ...]
+        return response()->json($categories, 200);
     }
-
 }

@@ -1,5 +1,5 @@
 <?php
-namespace App\Http\Controllers\Admin;
+namespace App\Http\Controllers\Api;
 
 use App\Models\Product;
 use Illuminate\Http\Request;
@@ -9,22 +9,21 @@ class ProductController extends Controller
 {
     public function index(Request $request)
     {
-        // On commence par la requête sur les produits
-        $query = Product::with('product_variants');
+        // Construire la requête avec la relation des variants
+        $query = Product::with('productVariants');
 
-        // Si une catégorie est sélectionnée, on filtre les produits
-        if ($request->has('category_id') && $request->category_id != '') {
+        // Appliquer le filtre par catégorie si présent
+        if ($request->has('category_id') && $request->category_id !== '') {
             $query->where('category_id', $request->category_id);
         }
 
-        $page = $request->get('page', 1);
+        // Récupérer tous les produits filtrés
+        $products = $query->get();
 
-        $products = $query->paginate(20, ['*'], 'page', $page); // On pagine les produits
-
-        return response()->json([
-            'produits' => $products,
-        ], 200);
+        // Retourner directement le tableau JSON de produits
+        return response()->json($products, 200);
     }
+
 
     // public function show(Product $product)
     // {
