@@ -5,6 +5,7 @@ import ProductDetail from "./components/Shop/ProductDetail/ProductDetail.jsx";
 import { Routes, Route } from "react-router-dom";
 import RegisterForm from "./components/Auth/RegisterForm";
 import LoginForm from "./components/Auth/LoginForm";
+import Cart from "./components/Cart/Cart";
 
 const App = () => {
     return (

@@ -1,5 +1,6 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import { useNavigate, Link } from "react-router-dom";
+import { CartContext } from "../../../context/CartContext";
 
 import "./Navbar.css";
 import Search from "../../../assets/images/Navbar/chercher.png";
@@ -15,12 +16,16 @@ const Navbar = () => {
     const [userIcon, setUserIcon] = useState(User);
     const navigate = useNavigate();
 
+    const { cart } = useContext(CartContext);
+    const totalItems = cart.reduce((sum, item) => sum + item.quantity, 0);
+
     return (
         <div>
-            <nav>
+            <nav className="navbar">
                 <a href="#" className="navbar-logo">
                     <img src={Logo} alt="Logo" />
                 </a>
+
                 <div className="link">
                     <Link to="/">Accueil</Link>
                     <Link to="/shop">Boutique</Link>
@@ -36,12 +41,21 @@ const Navbar = () => {
                             className="border"
                         />
                     </form>
-                    <img
-                        src={panierIcon}
-                        alt="icone panier"
-                        onMouseEnter={() => setPanierIcon(PanierHover)}
-                        onMouseLeave={() => setPanierIcon(Panier)}
-                    />
+
+                    <div style={{ position: "relative" }}>
+                        <img
+                            src={panierIcon}
+                            alt="icone panier"
+                            onMouseEnter={() => setPanierIcon(PanierHover)}
+                            onMouseLeave={() => setPanierIcon(Panier)}
+                            onClick={() => navigate("/cart")}
+                            style={{ cursor: "pointer" }}
+                        />
+                        {totalItems > 0 && (
+                            <span className="cart-counter">{totalItems}</span>
+                        )}
+                    </div>
+
                     <img
                         src={userIcon}
                         alt="icone utilisateur"

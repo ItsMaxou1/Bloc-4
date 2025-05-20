@@ -1,0 +1,147 @@
+.cart-container {
+  max-width: 800px;
+  margin: 2em auto;
+  padding: 2em;
+  background-color: #f8f9fa; /* comme ta navbar */
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* ombre légère */
+  border-radius: 8px;
+  font-family: 'Segoe UI', sans-serif;
+}
+
+.cart-container h2 {
+  text-align: center;
+  font-size: 2em;
+  margin-bottom: 1em;
+}
+
+.cart-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.cart-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1em 0;
+  border-bottom: 1px solid #ddd;
+}
+
+.cart-item div {
+  font-size: 1.1em;
+  color: #333;
+}
+
+.remove-button {
+  background-color: #e53935;
+  color: white;
+  border: none;
+  padding: 0.4em 1em;
+  border-radius: 25px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.remove-button:hover {
+  background-color: #c62828;
+}
+
+.cart-summary {
+  text-align: right;
+  margin-top: 2em;
+}
+
+.cart-summary p {
+  font-size: 1.2em;
+  font-weight: bold;
+}
+
+.cart-buttons {
+  display: flex;
+  gap: 1em;
+  justify-content: flex-end;
+  margin-top: 1em;
+}
+
+.clear-button,
+.order-button {
+  border: none;
+  padding: 0.6em 1.4em;
+  border-radius: 25px;
+  font-size: 1em;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.clear-button {
+  background-color: #999;
+  color: white;
+}
+
+.clear-button:hover {
+  background-color: #777;
+}
+
+.order-button {
+  background-color: #FFD700;
+  color: #333;
+  font-weight: bold;
+}
+
+.order-button:hover {
+  background-color: #e6c200;
+}
+
+.empty-cart {
+  text-align: center;
+  margin-top: 4rem;
+  font-size: 1.2em;
+  color: #555;
+}
+
+.back-button {
+  margin-bottom: 1em;
+}
+
+.back-button a {
+  text-decoration: none;
+  font-size: 1.1em;
+  color: #333;
+  font-weight: bold;
+  background-color: transparent;
+  padding: 0.3em 0.8em;
+  border-radius: 25px;
+  transition: background-color 0.3s ease;
+}
+
+.back-button a:hover {
+  background-color: #eaeaea;
+}
+
+.quantity-control {
+  display: flex;
+  align-items: center;
+  gap: 0.5em;
+  margin-top: 0.5em;
+}
+
+.quantity-control button {
+  background-color: #ddd;
+  border: none;
+  padding: 0.3em 0.7em;
+  font-size: 1em;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.quantity-control button:hover {
+  background-color: #ccc;
+}
+
+.quantity-control span {
+  font-size: 1.1em;
+  min-width: 1.2em;
+  text-align: center;
+}

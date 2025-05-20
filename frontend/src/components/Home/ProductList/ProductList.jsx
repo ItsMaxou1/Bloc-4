@@ -1,15 +1,19 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useContext } from "react";
 import axios from "axios";
 import "./ProductList.css";
+import { CartContext } from "../../../context/CartContext.jsx";
+import Alert from "../../Alert/Alert";
 
 function ProductList() {
     const [products, setProducts] = useState([]);
+    const [showAlert, setShowAlert] = useState(false);
+    const { addToCart } = useContext(CartContext);
 
     useEffect(() => {
         axios
-            .get("http://localhost:8000/api/product")
+            .get("http://localhost:8000/api/products")
             .then((response) => {
-                setProducts(response.data.produits.data);
+                setProducts(response.data);
             })
             .catch((error) => {
                 console.error(
@@ -19,41 +23,36 @@ function ProductList() {
             });
     }, []);
 
+    const handleAddToCart = (product) => {
+        addToCart(product);
+        setShowAlert(true);
+        setTimeout(() => setShowAlert(false), 3000);
+    };
+
     return (
-        <div>
-            <h2>Nos Produits</h2>
-            <div style={{ display: "flex", flexWrap: "wrap", gap: "20px" }}>
-                {products.map((product) => (
-                    <div
-                        key={product.id}
-                        style={{
-                            border: "1px solid #ccc",
-                            padding: "10px",
-                            width: "200px",
-                        }}
-                    >
-                        <h3>{product.name}</h3>
-                        <p>Prix : {product.price} €</p>
-                        {product.product_variants &&
-                            product.product_variants.length > 0 && (
-                                <div>
-                                    <strong>Variantes :</strong>
-                                    <ul>
-                                        {product.product_variants.map(
-                                            (variant) => (
-                                                <li key={variant.id}>
-                                                    {variant.name} (
-                                                    {variant.price} €)
-                                                </li>
-                                            )
-                                        )}
-                                    </ul>
-                                </div>
-                            )}
+        <section className="products-section">
+            <Alert message="Produit ajouté au panier !" show={showAlert} />
+
+            <h2 className="section-title">Produits</h2>
+            <div className="products-grid">
+                {products.slice(0, 8).map((prod) => (
+                    <div key={prod.id} className="product-card">
+                        <img
+                            src={`http://127.0.0.1:8000/assets/images/products/${prod.image_url}`}
+                            alt={prod.name}
+                            className="product-image"
+                        />
+                        <p className="product-name">{prod.name}</p>
+                        <button
+                            onClick={() => handleAddToCart(prod)}
+                            className="add-button"
+                        >
+                            Ajouter au panier
+                        </button>
                     </div>
                 ))}
             </div>
-        </div>
+        </section>
     );
 }
 

@@ -4,19 +4,19 @@ import { Link } from 'react-router-dom';           // ← ajouté
 import './Products.css';
 
 export default function ProductsList({ categoryId }) {
-  const [products, setProducts] = useState([]);
+    const [products, setProducts] = useState([]);
 
-  useEffect(() => {
-    let url = 'http://127.0.0.1:8000/api/products';
-    if (categoryId) {
-      url += `?category_id=${categoryId}`;
-    }
+    useEffect(() => {
+        let url = "http://127.0.0.1:8000/api/products";
+        if (categoryId) {
+            url += `?category_id=${categoryId}`;
+        }
 
-    fetch(url)
-      .then(res => res.json())
-      .then(data => setProducts(data))
-      .catch(console.error);
-  }, [categoryId]);
+        fetch(url)
+            .then((res) => res.json())
+            .then((data) => setProducts(data))
+            .catch(console.error);
+    }, [categoryId]);
 
   return (
     <section className="products-section">
