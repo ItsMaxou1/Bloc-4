@@ -1,0 +1,18 @@
+.alert-container {
+  position: fixed;
+  top: 1.5em;
+  right: 1.5em; /* ✅ à droite au lieu de left */
+  background-color: #28a745;
+  color: white;
+  padding: 0.8em 1.2em;
+  border-radius: 5px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+  z-index: 1000;
+  animation: fadeOut 4s forwards;
+}
+
+@keyframes fadeOut {
+  0%   { opacity: 1; }
+  80%  { opacity: 1; }
+  100% { opacity: 0; display: none; }
+}
