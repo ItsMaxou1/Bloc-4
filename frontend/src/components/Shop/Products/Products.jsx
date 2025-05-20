@@ -1,5 +1,6 @@
 // src/Shop/Products/ProductsList.jsx
 import React, { useEffect, useState } from 'react';
+import { Link } from 'react-router-dom';           // ← ajouté
 import './Products.css';
 
 export default function ProductsList({ categoryId }) {
@@ -22,14 +23,20 @@ export default function ProductsList({ categoryId }) {
       <h2 className="section-title">Produits</h2>
       <div className="products-grid">
         {products.map(prod => (
-          <div key={prod.id} className="product-card">
-            <img
-              src={`http://127.0.0.1:8000/assets/images/products/${prod.image_url}`}
-              alt={prod.name}
-              className="product-image"
-            />
-            <p className="product-name">{prod.name}</p>
-          </div>
+          <Link
+            key={prod.id}                              // lien cliquable
+            to={`/shop/product/${prod.id}`}             // URL dynamique
+            style={{ textDecoration: 'none', color: 'inherit' }}
+          >
+            <div className="product-card">
+              <img
+                src={`http://127.0.0.1:8000/assets/images/products/${prod.image_url}`}
+                alt={prod.name}
+                className="product-image"
+              />
+              <p className="product-name">{prod.name}</p>
+            </div>
+          </Link>
         ))}
       </div>
     </section>

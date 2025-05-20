@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api;
 use App\Models\Product;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Http\JsonResponse;
 
 class ProductController extends Controller
 {
@@ -24,13 +25,13 @@ class ProductController extends Controller
         return response()->json($products, 200);
     }
 
+    public function show($id): JsonResponse
+    {
+        // Charge le produit + ses variantes
+        $product = Product::with('variants')->findOrFail($id);
 
-    // public function show(Product $product)
-    // {
+        return response()->json($product);
+    }
 
-    //     return response()->json([
-    //         'produit' => $product->load('category', 'product_variants'),
-    //     ], 200);
-    // }
 
 }

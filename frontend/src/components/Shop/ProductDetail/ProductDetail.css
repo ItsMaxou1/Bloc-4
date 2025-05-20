@@ -1,0 +1,93 @@
+/* Container for the detail page */
+.product-detail {
+    max-width: 900px;
+    margin: 2rem auto;
+    padding: 1rem;
+  }
+  
+  /* Main title */
+  .product-title {
+    font-size: 2.5rem;
+    font-weight: 700;
+    text-align: center;
+    margin-bottom: 1.5rem;
+  }
+  
+  /* Layout for image and info */
+  .product-main {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 2rem;
+  }
+  
+  /* On larger screens, place image and info side by side */
+  @media (min-width: 768px) {
+    .product-main {
+      flex-direction: row;
+      align-items: flex-start;
+    }
+  }
+  
+  /* Product image styling */
+  .product-main-image {
+    width: 100%;
+    max-width: 400px;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    object-fit: cover;
+  }
+  
+  /* Info container */
+  .product-info {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    background: #fff;
+    padding: 1.5rem;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+  }
+  
+  /* Label for select */
+  .product-info label {
+    font-weight: 500;
+  }
+  
+  /* Format select dropdown */
+  #format-select {
+    padding: 0.5rem;
+    font-size: 1rem;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    max-width: 200px;
+  }
+  
+  /* Price styling */
+  .product-price {
+    font-size: 1.75rem;
+    font-weight: 600;
+    margin: 0.5rem 0;
+  }
+  
+  /* Stock styling */
+  .product-stock {
+    font-size: 1rem;
+    color: #555;
+    margin: 0;
+  }
+  
+  /* Short description styling */
+  .product-short-desc {
+    font-size: 1rem;
+    font-style: italic;
+    margin: 0.5rem 0;
+  }
+  
+  /* Full description styling */
+  .product-description {
+    font-size: 1rem;
+    line-height: 1.6;
+  }
+  
