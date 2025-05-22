@@ -1,38 +1,111 @@
+/* Container principal du panier */
 .cart-container {
   max-width: 800px;
   margin: 2em auto;
   padding: 2em;
-  background-color: #f8f9fa; /* comme ta navbar */
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* ombre légère */
+  background-color: #f8f9fa;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
   border-radius: 8px;
   font-family: 'Segoe UI', sans-serif;
 }
 
+/* Titre */
 .cart-container h2 {
   text-align: center;
   font-size: 2em;
   margin-bottom: 1em;
 }
 
+/* Liste sans puces */
 .cart-list {
   list-style: none;
   padding: 0;
   margin: 0;
 }
 
+/* Chaque ligne de panier */
 .cart-item {
   display: flex;
-  justify-content: space-between;
   align-items: center;
   padding: 1em 0;
   border-bottom: 1px solid #ddd;
 }
 
-.cart-item div {
+/* Image miniature */
+.cart-item-image {
+  width: 60px;
+  height: auto;
+  margin-right: 1em;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  flex-shrink: 0;
+}
+
+/* Conteneur des infos (nom, format, quantité, prix) */
+.cart-item-details {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Nom du produit */
+.cart-item-name {
   font-size: 1.1em;
+  margin: 0;
   color: #333;
 }
 
+/* Format (ex : “33cl”) */
+.cart-item-format {
+  font-size: 0.9em;
+  color: #555;
+  margin: 0.2em 0 0.5em;
+}
+
+/* Contrôle de quantité */
+.quantity-control {
+  display: flex;
+  align-items: center;
+  gap: 0.5em;
+  margin: 0.5em 0;
+}
+
+.quantity-control button {
+  background-color: #ddd;
+  border: none;
+  padding: 0.3em 0.7em;
+  font-size: 1em;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.quantity-control button:hover {
+  background-color: #ccc;
+}
+
+.quantity-control span {
+  font-size: 1.1em;
+  min-width: 1.2em;
+  text-align: center;
+}
+
+/* Prix unitaire */
+.cart-item-price {
+  margin: 0.25em 0;
+  font-size: 1em;
+  color: #333;
+}
+
+/* Total de la ligne */
+.cart-item-line-total {
+  margin: 0.25em 0;
+  font-size: 1em;
+  font-weight: bold;
+  color: #333;
+}
+
+/* Bouton Retirer */
 .remove-button {
   background-color: #e53935;
   color: white;
@@ -41,12 +114,14 @@
   border-radius: 25px;
   cursor: pointer;
   transition: background-color 0.3s ease;
+  margin-left: 1em;
 }
 
 .remove-button:hover {
   background-color: #c62828;
 }
 
+/* Récapitulatif */
 .cart-summary {
   text-align: right;
   margin-top: 2em;
@@ -55,8 +130,10 @@
 .cart-summary p {
   font-size: 1.2em;
   font-weight: bold;
+  margin: 0.5em 0;
 }
 
+/* Boutons du bas */
 .cart-buttons {
   display: flex;
   gap: 1em;
@@ -93,6 +170,7 @@
   background-color: #e6c200;
 }
 
+/* Panier vide */
 .empty-cart {
   text-align: center;
   margin-top: 4rem;
@@ -100,6 +178,7 @@
   color: #555;
 }
 
+/* Bouton retour */
 .back-button {
   margin-bottom: 1em;
 }
@@ -117,31 +196,4 @@
 
 .back-button a:hover {
   background-color: #eaeaea;
-}
-
-.quantity-control {
-  display: flex;
-  align-items: center;
-  gap: 0.5em;
-  margin-top: 0.5em;
-}
-
-.quantity-control button {
-  background-color: #ddd;
-  border: none;
-  padding: 0.3em 0.7em;
-  font-size: 1em;
-  border-radius: 4px;
-  cursor: pointer;
-  transition: background-color 0.2s;
-}
-
-.quantity-control button:hover {
-  background-color: #ccc;
-}
-
-.quantity-control span {
-  font-size: 1.1em;
-  min-width: 1.2em;
-  text-align: center;
 }

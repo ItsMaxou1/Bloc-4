@@ -10,17 +10,15 @@
 
 .products-grid {
   display: grid;
-  grid-template-columns: repeat(4, 1fr); /* 4 colonnes */
+  grid-template-columns: repeat(4, 1fr);
   gap: 1.5rem;
-  max-width: 1000px;       /* limite la largeur totale */
+  max-width: 1000px;
   margin: 0 auto;
   padding: 0 1rem;
   box-sizing: border-box;
 }
 
 .product-card {
-  width: 100%;             /* prend 100% de la cellule */
-  max-width: none;         /* évite de casser la colonne */
   background-color: #fff;
   border: 1px solid #ddd;
   border-radius: 8px;
@@ -29,7 +27,6 @@
   transition: transform 0.3s ease;
   box-sizing: border-box;
 }
-
 
 .product-card:hover {
   transform: scale(1.05);
@@ -41,14 +38,43 @@
   object-fit: cover;
 }
 
+.product-info {
+  text-align: left;
+  margin-top: 0.75rem;
+}
+
 .product-name {
-  margin-top: 1rem;
   font-weight: bold;
   font-size: 1.1rem;
+  margin: 0;
+}
+
+.product-category {
+  font-size: 0.9rem;
+  color: #666;
+  margin-top: 0.25rem;
+}
+
+.product-price-range {
+  font-size: 1rem;
+  font-weight: 500;
+  color: #333;
+  margin-top: 0.25rem;
+}
+
+.product-meta {
+  display: flex;
+  justify-content: space-between; /* bouton–espace–taux */
+  align-items: center;
+  margin-top: 1rem;
+}
+
+.product-alcool {
+  font-size: 0.9rem;
+  color: #888;
 }
 
 .add-button {
-  margin-top: 1rem;
   background-color: #222;
   color: #fff;
   border: none;
@@ -60,4 +86,3 @@
 .add-button:hover {
   background-color: #444;
 }
-

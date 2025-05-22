@@ -1,59 +1,76 @@
 import React, { useEffect, useState, useContext } from "react";
-import axios from "axios";
-import "./ProductList.css";
-import { CartContext } from "../../../context/CartContext.jsx";
+import { CartContext } from "../../../context/CartContext";
 import Alert from "../../Alert/Alert";
+import "./ProductList.css";
 
-function ProductList() {
-    const [products, setProducts] = useState([]);
-    const [showAlert, setShowAlert] = useState(false);
-    const { addToCart } = useContext(CartContext);
+export default function ProductList() {
+  const [products, setProducts] = useState([]);
+  const [showAlert, setShowAlert] = useState(false);
+  const { addToCart } = useContext(CartContext);
 
-    useEffect(() => {
-        axios
-            .get("http://localhost:8000/api/products")
-            .then((response) => {
-                setProducts(response.data);
-            })
-            .catch((error) => {
-                console.error(
-                    "Erreur lors du chargement des produits :",
-                    error
-                );
-            });
-    }, []);
+  useEffect(() => {
+    fetch("http://localhost:8000/api/products")
+      .then((res) => {
+        if (!res.ok) throw new Error(`HTTP ${res.status}`);
+        return res.json();
+      })
+      .then((data) => setProducts(data))
+      .catch(() => {
+        // gestion d'erreur si nécessaire
+      });
+  }, []);
 
-    const handleAddToCart = (product) => {
-        addToCart(product);
-        setShowAlert(true);
-        setTimeout(() => setShowAlert(false), 3000);
-    };
+  // Calcul min–max des prix
+  const formatPriceRange = (prod) => {
+    const variants = prod.product_variants;
+    if (!variants || variants.length === 0) return "";
+    const prices = variants.map((v) => parseFloat(v.price));
+    const min = Math.min(...prices).toFixed(2);
+    const max = Math.max(...prices).toFixed(2);
+    return min === max ? `${min} €` : `${min} € – ${max} €`;
+  };
 
-    return (
-        <section className="products-section">
-            <Alert message="Produit ajouté au panier !" show={showAlert} />
+  const handleAdd = (prod) => {
+    addToCart(prod, prod.product_variants[0]);
+    setShowAlert(true);
+    setTimeout(() => setShowAlert(false), 3000);
+  };
 
-            <h2 className="section-title">Produits</h2>
-            <div className="products-grid">
-                {products.slice(0, 8).map((prod) => (
-                    <div key={prod.id} className="product-card">
-                        <img
-                            src={`http://127.0.0.1:8000/assets/images/products/${prod.image_url}`}
-                            alt={prod.name}
-                            className="product-image"
-                        />
-                        <p className="product-name">{prod.name}</p>
-                        <button
-                            onClick={() => handleAddToCart(prod)}
-                            className="add-button"
-                        >
-                            Ajouter au panier
-                        </button>
-                    </div>
-                ))}
+  return (
+    <section className="products-section">
+      <Alert message="Produit ajouté au panier !" show={showAlert} />
+
+      <h2 className="section-title">Produits</h2>
+      <div className="products-grid">
+        {products.slice(0, 8).map((prod) => (
+          <div key={prod.id} className="product-card">
+            <img
+              src={`http://127.0.0.1:8000/assets/images/products/${prod.image_url}`}
+              alt={prod.name}
+              className="product-image"
+            />
+
+            <div className="product-info">
+              <p className="product-name">{prod.name}</p>
+              <p className="product-category">
+                {prod.category?.name ?? "Catégorie inconnue"}
+              </p>
+              <p className="product-price-range">
+                {formatPriceRange(prod)}
+              </p>
             </div>
-        </section>
-    );
-}
 
-export default ProductList;
+            <div className="product-meta">
+              <button onClick={() => handleAdd(prod)} className="add-button">
+                Ajouter
+              </button>
+              <span className="product-alcool">
+                {parseFloat(prod.alcool_volume).toFixed(2)}% vol.
+              </span>
+            </div>
+          </div>
+        ))}
+      </div>
+    </section>
+  );
+}

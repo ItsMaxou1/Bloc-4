@@ -1,13 +1,15 @@
 // src/Shop/ProductDetail/ProductDetail.jsx
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import { useParams } from 'react-router-dom';
 import './ProductDetail.css';
 import Navbar from "../../Home/Navbar/Navbar";
+import { CartContext } from "../../../context/CartContext.jsx";
 
 export default function ProductDetail() {
   const { id } = useParams();              // id du produit
   const [product, setProduct] = useState(null);
   const [selectedVariant, setSelectedVariant] = useState(null);
+  const { addToCart } = useContext(CartContext);
 
   useEffect(() => {
     fetch(`http://127.0.0.1:8000/api/products/${id}`)
@@ -77,6 +79,15 @@ export default function ProductDetail() {
             {product.description && (
               <p className="product-description">{product.description}</p>
             )}
+
+            {/* 3.5 Bouton d'ajout au panier */}
+            <button
+              onClick={() => addToCart(product, selectedVariant)}
+              className="add-button"
+            >
+              Ajouter au panier
+            </button>
+
           </div>
         </div>
       </section>

@@ -228,6 +228,46 @@
         }
     }
 
+/* Boutons Import/Export */
+.db-buttons {
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
+    padding: 2rem 0;
+  }
+  
+  .db-buttons input[type="file"] {
+    border: 1px solid #ccc;
+    padding: .5rem;
+    border-radius: .25rem;
+  }
+  
+  .btn {
+    padding: .75rem 1.5rem;
+    border: none;
+    border-radius: .5rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background .2s;
+  }
+  
+  .btn-export {
+    background-color: #28a745;
+    color: #fff;
+  }
+  .btn-export:hover {
+    background-color: #218838;
+  }
+  
+  .btn-import {
+    background-color: #007bff;
+    color: #fff;
+  }
+  .btn-import:hover {
+    background-color: #0069d9;
+  }
+  
+
 /* Responsive Design */
 @media (max-width: 1200px) {
     .dashboard-cards {
