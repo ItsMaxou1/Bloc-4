@@ -2,36 +2,39 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Admin\AdminProductController;
+use App\Http\Controllers\Admin\AuthController as AdminAuthController;
 
-// 🏠 Redirection vers la page d'accueil de l'admin
-Route::redirect('/', '/admin');
+// 🏠 Page d’accueil publique
+Route::get('/', function () {
+    return view('public'); // une vue simple genre bouton "accès admin"
+});
 
+// 🔁 Fix Laravel pour les redirections internes
+Route::get('/login', fn() => redirect()->route('admin.login'))->name('login');
 
-
-// 📁 Groupe de routes admin (prefix: /admin | name: admin.)
+// 📁 Groupe admin
 Route::prefix('admin')->name('admin.')->group(function () {
 
-    // 🔒 Routes admin protégées par authentification
-    // 👇 Quand tu remettras la protection plus tard :
-    // Route::middleware(['auth', 'role:admin'])->group(function () {
-    //     Route::get('/', [AdminProductController::class, 'dashboard'])->name('welcome');
-    //     Route::resource('products', AdminProductController::class); // version raccourcie
-    // });
+    // 👁️ Formulaire de connexion sur /admin
+    Route::get('/', [AdminAuthController::class, 'showLoginForm'])->name('login');
 
+    // 🔐 Connexion / déconnexion
+    Route::post('/login', [AdminAuthController::class, 'login'])->name('login.submit');
+    Route::post('/logout', [AdminAuthController::class, 'logout'])->name('logout');
 
-    // 🔓 Routes admin accessibles sans authentification (pour le dev)
+    // 🔒 Accès aux fonctionnalités admin après connexion
+    Route::middleware('auth')->group(function () {
 
-    // 🏠 Accueil admin (dashboard)
-    Route::get('/', [AdminProductController::class, 'dashboard'])->name('welcome');
+        // 🏠 Dashboard (protégé dans le contrôleur)
+        Route::get('/dashboard', [AdminProductController::class, 'dashboard'])->name('welcome');
 
-
-    // 📦 CRUD Produits
-    Route::get('/products', [AdminProductController::class, 'index'])->name('products.index');             // Liste des produits
-    Route::get('/products/create', [AdminProductController::class, 'create'])->name('products.create');     // Formulaire de création
-    Route::post('/products', [AdminProductController::class, 'store'])->name('products.store');             // Traitement de création
-    Route::get('/products/{product}', [AdminProductController::class, 'show'])->name('products.show');      // Affichage d’un produit
-    Route::get('/products/{product}/edit', [AdminProductController::class, 'edit'])->name('products.edit'); // Formulaire d’édition
-    Route::put('/products/{product}', [AdminProductController::class, 'update'])->name('products.update');  // Traitement de l’édition
-    Route::delete('/products/{product}', [AdminProductController::class, 'destroy'])->name('products.destroy'); // Suppression
-
+        // 📦 CRUD Produits
+        Route::get('/products', [AdminProductController::class, 'index'])->name('products.index');
+        Route::get('/products/create', [AdminProductController::class, 'create'])->name('products.create');
+        Route::post('/products', [AdminProductController::class, 'store'])->name('products.store');
+        Route::get('/products/{product}', [AdminProductController::class, 'show'])->name('products.show');
+        Route::get('/products/{product}/edit', [AdminProductController::class, 'edit'])->name('products.edit');
+        Route::put('/products/{product}', [AdminProductController::class, 'update'])->name('products.update');
+        Route::delete('/products/{product}', [AdminProductController::class, 'destroy'])->name('products.destroy');
+    });
 });

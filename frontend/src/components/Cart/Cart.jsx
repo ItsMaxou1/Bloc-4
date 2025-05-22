@@ -19,11 +19,10 @@ function Cart() {
 
     if (cart.length === 0) {
         return (
-            <div className="cart-container">
-                <div className="back-button">
-                    <Link to="/">← Retour à l'accueil</Link>
+            <div>
+                <div className="cart-container">
+                    <p className="empty-cart">Votre panier est vide.</p>
                 </div>
-                <p className="empty-cart">Votre panier est vide.</p>
             </div>
         );
     }

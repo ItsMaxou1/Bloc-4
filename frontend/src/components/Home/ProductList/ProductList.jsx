@@ -43,12 +43,6 @@ function ProductList() {
                             className="product-image"
                         />
                         <p className="product-name">{prod.name}</p>
-                        <button
-                            onClick={() => handleAddToCart(prod)}
-                            className="add-button"
-                        >
-                            Ajouter au panier
-                        </button>
                     </div>
                 ))}
             </div>
