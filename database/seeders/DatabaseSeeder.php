@@ -32,25 +32,6 @@ class DatabaseSeeder extends Seeder
             OrderSeeder::class,
         ]);
 
-
-
-        // Création des catégories et marques
-        // User::factory(10)->create();
-        // Category::factory(10)->create();
-        // Product::factory(10)->create();
-        // Brand::factory(10)->create();
-
-        // $this->call([
-        //     ProductVariantSeeder::class,
-        // User::factory()->create([
-        //     'name' => 'Admin',
-        //     'email' => 'admin@gmail.com',
-        //     'password' => bcrypt('admin'),
-        //     'role' => 'admin',
-        //     'remember_token' => null,
-        //     'email_verified_at' => now(),
-        // ]);
-
         $this->call(ShopDataSeeder::class);
 
     }
