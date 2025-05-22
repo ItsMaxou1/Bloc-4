@@ -1,6 +1,7 @@
 import React, { useState, useContext } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import { CartContext } from "../../../context/CartContext";
+import { AuthContext } from "../../../context/AuthContext";
 
 import "./Navbar.css";
 import Search from "../../../assets/images/Navbar/chercher.png";
@@ -17,6 +18,8 @@ const Navbar = () => {
     const navigate = useNavigate();
 
     const { cart } = useContext(CartContext);
+    const { user } = useContext(AuthContext);
+
     const totalItems = cart.reduce((sum, item) => sum + item.quantity, 0);
 
     return (
@@ -56,14 +59,38 @@ const Navbar = () => {
                         )}
                     </div>
 
-                    <img
-                        src={userIcon}
-                        alt="icone utilisateur"
-                        onMouseEnter={() => setUserIcon(UserHover)}
-                        onMouseLeave={() => setUserIcon(User)}
-                        onClick={() => navigate("/login")}
-                        style={{ cursor: "pointer" }}
-                    />
+                    {user ? (
+                        <div
+                            onClick={() => navigate("/profile")}
+                            style={{
+                                display: "flex",
+                                alignItems: "center",
+                                gap: "8px",
+                                cursor: "pointer",
+                            }}
+                        >
+                            <img
+                                src={user.avatar}
+                                alt="profil"
+                                style={{
+                                    width: "30px",
+                                    height: "30px",
+                                    borderRadius: "50%",
+                                    objectFit: "cover",
+                                }}
+                            />
+                            <span>{user.firstname}</span>
+                        </div>
+                    ) : (
+                        <img
+                            src={userIcon}
+                            alt="icone utilisateur"
+                            onMouseEnter={() => setUserIcon(UserHover)}
+                            onMouseLeave={() => setUserIcon(User)}
+                            onClick={() => navigate("/login")}
+                            style={{ cursor: "pointer" }}
+                        />
+                    )}
                 </div>
             </nav>
         </div>
