@@ -8,7 +8,7 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\Api\ProductVariantController;
 
 Route::get('/products', [ProductController::class, 'index']);
-Route::get('/products/{id}', [ProductController::class, 'show']);
+Route::get('/products/{product}', [ProductController::class, 'show']);
 
 Route::get('product_variants/{productVariant}', [ProductVariantController::class, 'show']);
 

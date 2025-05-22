@@ -23,6 +23,9 @@ Route::prefix('admin')->name('admin.')->group(function () {
 
     // 🏠 Accueil admin (dashboard)
     Route::get('/', [AdminProductController::class, 'dashboard'])->name('welcome');
+    Route::get('database/export', [AdminProductController::class, 'exportDatabase'])->name('database.export');
+    Route::post('database/import', [AdminProductController::class, 'importDatabase'])->name('database.import');
+
 
 
     // 📦 CRUD Produits

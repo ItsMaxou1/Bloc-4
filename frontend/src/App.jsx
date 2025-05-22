@@ -1,40 +1,34 @@
+// src/App.jsx
 import React from "react";
-import HomePage from "./pages/home";
-import ShopPage from "./pages/shop";
-import ProductDetail from "./components/Shop/ProductDetail/ProductDetail.jsx";
 import { Routes, Route } from "react-router-dom";
-import RegisterForm from "./components/Auth/RegisterForm";
-import LoginForm from "./components/Auth/LoginForm";
-import Cart from "./components/Cart/Cart";
 
-const App = () => {
-    return (
-        <Routes>
-            <Route path="/" element={<HomePage />} />
-            <Route path="/shop" element={<ShopPage />} />
+import HomePage      from "./pages/home";
+import ShopPage      from "./pages/shop";
+import ProductDetail from "./components/Shop/ProductDetail/ProductDetail.jsx";
+import Cart          from "./components/Cart/Cart";
+import RegisterForm  from "./components/Auth/RegisterForm";
+import LoginForm     from "./components/Auth/LoginForm";
 
-            <Route path="/cart" element={<Cart />} />
+export default function App() {
+  return (
+    <Routes>
+      {/* Accueil */}
+      <Route path="/" element={<HomePage />} />
 
-<<<<<<< HEAD
-                    <Route path="/cart" element={<Cart />} />
-                    <Route
-                        path="/shop/product/:id"
-                        element={<ProductDetail />}
-                    />
-                    <Route path="/profile" element={<Profile />} />
+      {/* Boutique */}
+      <Route path="/shop" element={<ShopPage />} />
+      {/* Détail produit : c’est ici que useParams().id sera défini */}
+      <Route path="/shop/product/:id" element={<ProductDetail />} />
 
-                    <Route path="/register" element={<RegisterForm />} />
-                    <Route path="/login" element={<LoginForm />} />
-                </Routes>
-            </main>
-            <Footer />
-        </div>
-=======
-            <Route path="/register" element={<RegisterForm />} />
-            <Route path="/login" element={<LoginForm />} />
-        </Routes>
->>>>>>> parent of 9e4f7e6 (commit hugo Login/Login admin)
-    );
-};
+      {/* Panier */}
+      <Route path="/cart" element={<Cart />} />
 
-export default App;
+      {/* Authentification */}
+      <Route path="/register" element={<RegisterForm />} />
+      <Route path="/login" element={<LoginForm />} />
+
+      {/* 404 si aucune route ne matche */}
+      <Route path="*" element={<div>Page non trouvée</div>} />
+    </Routes>
+  );
+}

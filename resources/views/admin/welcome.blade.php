@@ -35,10 +35,16 @@
             <!-- Dashboard Stats -->
             <h1>Dashboard</h1>
             <div class="dashboard-cards">
+                <!-- Nombre de Produits -->
+                <div class="card">
+                    <h3>Produits au catalogue</h3>
+                    <p>{{ $productsCount }}</p>
+                </div>
+
                 <!-- Revenu Total -->
                 <div class="card">
                     <h3>Revenu Total</h3>
-                    <p>{{ $totalRevenue }} €</p>
+                    <p>{{ number_format($totalRevenue, 2, ',', ' ') }} €</p>
                 </div>
 
                 <!-- Nombre de Commandes -->
@@ -72,14 +78,14 @@
                 <thead>
                     <tr>
                         <th>Format</th>
-                        <th>Ventes Totales</th>
+                        <th>Ventes Totales (€)</th>
                     </tr>
                 </thead>
                 <tbody>
                     @foreach($salesByFormat as $sale)
                         <tr>
                             <td>{{ $sale->format }}</td>
-                            <td>{{ $sale->sales }} €</td>
+                            <td>{{ number_format($sale->sales, 2, ',', ' ') }} €</td>
                         </tr>
                     @endforeach
                 </tbody>
