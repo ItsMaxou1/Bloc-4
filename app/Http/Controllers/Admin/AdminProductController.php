@@ -115,71 +115,103 @@ class AdminProductController extends Controller
 
     public function dashboard()
     {
-        $totalRevenue = Order::sum('total_included_tax');
-        $ordersCount = Order::count();
+        // ✅ Vérification : seul un admin connecté peut accéder
+        if (!auth()->check() || auth()->user()->role !== 'admin') {
+            return redirect()->route('admin.login')->withErrors(['email' => 'Accès interdit.']);
+        }
+
+        // Récupérer les données nécessaires
+        $totalRevenue = Order::sum('total_included_tax'); // Revenu total des commandes
+        $ordersCount = Order::count(); // Nombre total de commandes
         $activeSessions = DB::table('sessions')
             ->where('last_activity', '>=', now()->subMinutes(30))
             ->count();
         $totalSessions = DB::table('sessions')->count();
-        $usersCount = User::count();
+        $usersCount = User::count(); // Nombre total d'utilisateurs inscrits
+
         $salesByFormat = ProductVariant::selectRaw('format, sum(price) as sales')
             ->groupBy('format')
             ->get();
 
-        return view('admin.welcome', compact(
-            'totalRevenue',
-            'ordersCount',
-            'activeSessions',
-            'totalSessions',
-            'usersCount',
-            'salesByFormat'
-        ));
-    }
-
-    /**
-     * Exporte toute la base de données au format SQL via SHOW TABLES.
-     */
-    public function exportDatabase(): StreamedResponse
-    {
-        $connection = config('database.default');
-        $dbName = config("database.connections.{$connection}.database");
-
-        // Récupère la liste des tables
-        $rows = DB::select("SHOW TABLES");
-        $key = "Tables_in_{$dbName}";
-        $tables = array_map(fn($r) => $r->$key, $rows);
-
-        return response()->streamDownload(
-            function () use ($tables) {
-                foreach ($tables as $table) {
-                    echo "-- Table: {$table}\n";
-                    $rows = DB::table($table)->get();
-                    foreach ($rows as $row) {
-                        $row = (array) $row;
-                        $cols = array_map(fn($c) => "`{$c}`", array_keys($row));
-                        $vals = array_map(fn($v) => DB::getPdo()->quote($v), array_values($row));
-                        echo "INSERT INTO `{$table}` (" . implode(', ', $cols) . ") VALUES (" . implode(', ', $vals) . ");\n";
-                    }
-                    echo "\n";
-                }
-            },
-            "dump_{$dbName}_" . date('Ymd_His') . ".sql",
-            ['Content-Type' => 'application/sql']
-        );
-    }
-
-    /**
-     * Importe un fichier SQL uploadé.
-     */
-    public function importDatabase(Request $request)
-    {
-        $request->validate([
-            'sql_file' => 'required|file|mimes:sql,txt',
+        return view('admin.welcome', [
+            'totalRevenue' => $totalRevenue,
+            'ordersCount' => $ordersCount,
+            'activeSessions' => $activeSessions,
+            'totalSessions' => $totalSessions,
+            'usersCount' => $usersCount,
+            'salesByFormat' => $salesByFormat,
         ]);
+    }
+}
 
-        $sql = file_get_contents($request->file('sql_file')->getRealPath());
-        DB::unprepared($sql);
+/*tVariant; // Importer le modèle ProductVariant
+use App\Models\Order;
+use App\Models\Session;
+use App\Models\User;
+use App\Http\Controllers\Controller;
+use App\Http\Requests\ProductStoreRequest;
+use Illuminate\Http\Request;
 
-        return back()->with('success', 'Import terminé.');
+class AdminProductController extends Controller
+{
+    public function index(Request $request)
+    {
+        // On commence par la requête sur les variantes de produits
+        $query = ProductVariant::query(); // Utiliser ProductVariant plutôt que Product
+
+        // Si une catégorie est sélectionnée, on filtre les produits
+        if ($request->has('category_id') && $request->category_id != '') {
+            $query->where('category_id', $request->category_id);
+        }
+
+        $productVariants = $query->paginate(20)->appends($request->query()); // On pagine les variantes de produits
+
+        return view('admin.products.index', [
+            'productVariants' => $productVariants,  // Renommer pour correspondre à la table des variantes
+            'categories' => Category::all(),
+        ]);
+    }
+
+    public function store(ProductStoreRequest $request)
+    {
+        $validated = $request->validated();
+        $validated['available'] = isset($validated['available']);
+        $validated['cover'] = "https://blog.tubikstudio.com/wp-content/uploads/2019/03/cover-1.png";
+
+        // Création de la variante de produit
+        ProductVariant::create($validated);  // Créer une variante de produit, pas un produit
+
+        // Récupérer la liste mise à jour des variantes de produits
+        $productVariants = ProductVariant::paginate(20);  // Utiliser ProductVariant
+
+        return view('admin.products.index', [
+            'productVariants' => $productVariants,  // Renommer pour correspondre à la table des variantes
+            'categories' => Category::all(),
+        ]);
+    }
+
+    public function dashboard()
+    {
+        // Récupérer les données nécessaires
+        $totalRevenue = Order::sum('total_included_tax'); // Revenu total des commandes
+        $ordersCount = Order::count(); // Nombre total de commandes
+        $activeSessions = Session::where('last_activity', '>=', now()->subMinutes(30))->count(); // Sessions actives (dernières 30 minutes)
+        $totalSessions = Session::count(); // Nombre total de sessions
+        $usersCount = User::count(); // Nombre total d'utilisateurs inscrits
+
+        // Répartition des ventes par format (si nécessaire)
+        $salesByFormat = ProductVariant::selectRaw('format, sum(price) as sales')
+            ->groupBy('format')
+            ->get();
+
+        // Passer les données à la vue
+        return view('admin.welcome', [
+            'totalRevenue' => $totalRevenue,
+            'ordersCount' => $ordersCount,
+            'activeSessions' => $activeSessions,
+            'totalSessions' => $totalSessions,
+            'usersCount' => $usersCount,
+            'salesByFormat' => $salesByFormat,
+        ]);
     }
 }

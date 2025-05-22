@@ -2,13 +2,17 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Admin\AdminProductController;
+use App\Http\Controllers\Admin\AuthController as AdminAuthController;
 
-// 🏠 Redirection vers la page d'accueil de l'admin
-Route::redirect('/', '/admin');
+// 🏠 Page d’accueil publique
+Route::get('/', function () {
+    return view('public'); // une vue simple genre bouton "accès admin"
+});
 
+// 🔁 Fix Laravel pour les redirections internes
+Route::get('/login', fn() => redirect()->route('admin.login'))->name('login');
 
-
-// 📁 Groupe de routes admin (prefix: /admin | name: admin.)
+// 📁 Groupe admin
 Route::prefix('admin')->name('admin.')->group(function () {
 
     // 🔒 Routes admin protégées par authentification
@@ -23,15 +27,6 @@ Route::prefix('admin')->name('admin.')->group(function () {
 
     // 🏠 Accueil admin (dashboard)
     Route::get('/', [AdminProductController::class, 'dashboard'])->name('welcome');
-    // Remplace la déclaration POST par une GET :
-    Route::get('/database/export', [AdminProductController::class, 'exportDatabase'])
-        ->name('database.export');
-
-    // (Garde le POST pour l’import)
-    Route::post('/database/import', [AdminProductController::class, 'importDatabase'])
-        ->name('database.import');
-
-
 
 
     // 📦 CRUD Produits
@@ -40,7 +35,7 @@ Route::prefix('admin')->name('admin.')->group(function () {
     Route::post('/products', [AdminProductController::class, 'store'])->name('products.store');             // Traitement de création
     Route::get('/products/{product}', [AdminProductController::class, 'show'])->name('products.show');      // Affichage d’un produit
     Route::get('/products/{product}/edit', [AdminProductController::class, 'edit'])->name('products.edit'); // Formulaire d’édition
-    Route::put('/products/{product}/update', [AdminProductController::class, 'update'])->name('products.update');  // Traitement de l’édition
+    Route::put('/products/{product}', [AdminProductController::class, 'update'])->name('products.update');  // Traitement de l’édition
     Route::delete('/products/{product}', [AdminProductController::class, 'destroy'])->name('products.destroy'); // Suppression
 
 });

@@ -35,13 +35,6 @@ const categories = [
         description:
             "Amère et fruitée, incontournable pour les amateurs de houblon.",
     },
-    {
-        image: image5,
-        link: "/mousstache",
-        title: "Bière Mousstache",
-        description:
-            "Une recette originale et unique pour une expérience surprenante.",
-    },
 ];
 
 function Category() {
@@ -52,11 +45,7 @@ function Category() {
             <h1 className="category-title">Découvrez nos catégories !</h1>
             <div className="categories-container">
                 {categories.map((category, index) => (
-                    <div
-                        key={index}
-                        className="category-item"
-                        onClick={() => navigate(category.link)}
-                    >
+                    <div key={index} className="category-item">
                         <div className="category-circle">
                             <img
                                 src={category.image}
