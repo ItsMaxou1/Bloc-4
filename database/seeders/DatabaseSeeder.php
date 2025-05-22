@@ -28,6 +28,11 @@ class DatabaseSeeder extends Seeder
             'email_verified_at' => now(),
         ]);
 
+        $this->call([
+            OrderSeeder::class,
+        ]);
+
+
 
         // Création des catégories et marques
         // User::factory(10)->create();

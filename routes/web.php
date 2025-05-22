@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Admin\AdminOrderController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Admin\AdminProductController;
 use App\Http\Controllers\Admin\AuthController as AdminAuthController;
@@ -14,6 +15,9 @@ Route::get('/login', fn() => redirect()->route('admin.login'))->name('login');
 
 // 📁 Groupe admin
 Route::prefix('admin')->name('admin.')->group(function () {
+
+    Route::get('orders', [AdminOrderController::class, 'index'])
+        ->name('orders.index');
 
     // 👁️ Formulaire de connexion sur /admin
     Route::get('/', [AdminAuthController::class, 'showLoginForm'])->name('login');
