@@ -115,6 +115,12 @@ class AdminProductController extends Controller
 
     public function dashboard()
     {
+
+        // ✅ Vérification : seul un admin connecté peut accéder
+        if (!auth()->check() || auth()->user()->role !== 'admin') {
+            return redirect()->route('admin.login')->withErrors(['email' => 'Accès interdit.']);
+        }
+
         // Nombre total de produits
         $productsCount = Product::count();
 

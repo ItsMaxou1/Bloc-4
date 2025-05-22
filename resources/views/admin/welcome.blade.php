@@ -26,10 +26,27 @@
         <main class="main-content">
             <!-- Header -->
             <header class="topbar">
-                <div class="user-info">
+                <div class="user-info" style="display: flex; align-items: center; gap: 15px;">
                     <span>Bienvenue {{ Auth::check() ? Auth::user()->name : 'invité' }}</span>
-                    <img src="{{ asset('assets/images/pp1.webp') }}" alt="User" width="50" height="50">
+                    <img src="{{ asset('assets/images/pp1.webp') }}" alt="User" width="50" height="50"
+                        style="border-radius: 50%;">
+
+                    <form method="POST" action="{{ route('admin.logout') }}">
+                        @csrf
+                        <button type="submit" style="
+                            background-color: #ef4444;
+                            color: white;
+                            border: none;
+                            padding: 8px 12px;
+                            border-radius: 6px;
+                            font-weight: bold;
+                            cursor: pointer;
+                        ">
+                            Déconnexion
+                        </button>
+                    </form>
                 </div>
+
             </header>
 
             <!-- Dashboard Stats -->

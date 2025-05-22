@@ -3,12 +3,15 @@
 use App\Http\Controllers\Admin\AdminOrderController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Admin\AdminProductController;
+use App\Http\Controllers\Admin\AuthController as AdminAuthController;
 
-// 🏠 Redirection vers la page d'accueil de l'admin
-Route::redirect('/', '/admin');
+// 🏠 Page d’accueil publique
+Route::get('/', function () {
+    return view('public'); // une vue simple genre bouton "accès admin"
+});
 
-
-
+// 🔁 Fix Laravel pour les redirections internes
+Route::get('/login', fn() => redirect()->route('admin.login'))->name('login');
 // 📁 Groupe de routes admin (prefix: /admin | name: admin.)
 Route::prefix('admin')->name('admin.')->group(function () {
 
@@ -27,6 +30,19 @@ Route::prefix('admin')->name('admin.')->group(function () {
 
         // 🏠 Dashboard (protégé dans le contrôleur)
         Route::get('/dashboard', [AdminProductController::class, 'dashboard'])->name('welcome');
+        Route::get('database/export', [AdminProductController::class, 'exportDatabase'])->name('database.export');
+        Route::post('database/import', [AdminProductController::class, 'importDatabase'])->name('database.import');
+
+        // 📦 CRUD Commandes
+        Route::get('/orders', [AdminOrderController::class, 'index'])->name('orders.index');             // Liste des commandes
+        Route::get('/orders/create', [AdminOrderController::class, 'create'])->name('orders.create');     // Formulaire de création
+        Route::post('/orders', [AdminOrderController::class, 'store'])->name('orders.store');             // Traitement de création
+        Route::get('/orders/{order}', [AdminOrderController::class, 'show'])->name('orders.show');      // Affichage d’une commande
+        Route::get('/orders/{order}/edit', [AdminOrderController::class, 'edit'])->name('orders.edit'); // Formulaire d’édition
+        Route::put('/orders/{order}', [AdminOrderController::class, 'update'])->name('orders.update');  // Traitement de l’édition
+        Route::delete('/orders/{order}', [AdminOrderController::class, 'destroy'])->name('orders.destroy'); // Suppression
+
+    });
 
     // 📦 CRUD Produits
     Route::get('/products', [AdminProductController::class, 'index'])->name('products.index');             // Liste des produits

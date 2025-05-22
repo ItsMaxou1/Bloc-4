@@ -8,6 +8,7 @@ import ProductDetail from "./components/Shop/ProductDetail/ProductDetail.jsx";
 import Cart          from "./components/Cart/Cart";
 import RegisterForm  from "./components/Auth/RegisterForm";
 import LoginForm     from "./components/Auth/LoginForm";
+import Profile from "./pages/profil";
 
 export default function App() {
   return (
@@ -22,6 +23,8 @@ export default function App() {
 
       {/* Panier */}
       <Route path="/cart" element={<Cart />} />
+
+      <Route path="/profile" element={<Profile />} />
 
       {/* Authentification */}
       <Route path="/register" element={<RegisterForm />} />

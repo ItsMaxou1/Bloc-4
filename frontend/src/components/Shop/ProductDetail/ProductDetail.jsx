@@ -20,8 +20,7 @@ export default function ProductDetail() {
       })
       .then((data) => {
         setProduct(data);
-
-        // on détecte la bonne clé de variantes selon ce que renvoie l'API
+        // on récupère la liste des variantes, quel que soit le nom
         const variants =
           data.variants ||
           data.productVariants ||
@@ -35,11 +34,12 @@ export default function ProductDetail() {
       .catch((err) => console.error("Fetch product error:", err));
   }, [id]);
 
-    if (!product || !selectedVariant) {
-        return <p>Chargement du produit…</p>;
-    }
+  // on attend d'avoir le produit ET une variante
+  if (!product || !selectedVariant) {
+    return <p>Chargement du produit…</p>;
+  }
 
-  // Même logique de détection pour l'affichage
+  // même logique de récupération pour l'affichage
   const variants =
     product.variants ||
     product.productVariants ||
@@ -49,21 +49,29 @@ export default function ProductDetail() {
   return (
     <>
       <Navbar />
+
       <section className="product-detail">
         <h1 className="product-title">{product.name}</h1>
+
         <div className="product-main">
+          {/* 1. Image à gauche */}
           <img
             className="product-main-image"
             src={`http://127.0.0.1:8000/assets/images/products/${product.image_url}`}
             alt={product.name}
           />
+
+          {/* 2. Infos à droite */}
           <div className="product-info">
+            {/* Sélecteur de format */}
             <label htmlFor="format-select">Format&nbsp;:</label>
             <select
               id="format-select"
               value={selectedVariant.id}
               onChange={(e) => {
-                const v = variants.find((v) => v.id === Number(e.target.value));
+                const v = variants.find(
+                  (v) => v.id === Number(e.target.value)
+                );
                 setSelectedVariant(v);
               }}
             >
@@ -74,18 +82,25 @@ export default function ProductDetail() {
               ))}
             </select>
 
+            {/* Prix et stock */}
             <p className="product-price">{selectedVariant.price} €</p>
-            <p className="product-stock">Stock : {selectedVariant.stock}</p>
+            <p className="product-stock">
+              Stock : {selectedVariant.stock}
+            </p>
 
+            {/* Short description */}
             {product.short_description && (
               <p className="product-short-desc">
                 {product.short_description}
               </p>
             )}
+
+            {/* Full description */}
             {product.description && (
               <p className="product-description">{product.description}</p>
             )}
 
+            {/* Bouton Ajouter au panier */}
             <button
               onClick={() => addToCart(product, selectedVariant)}
               className="add-button"
