@@ -40,12 +40,7 @@ class AuthController extends Controller
 
         return response()->json([
             'message' => 'Connexion réussie.',
-            'user' => [
-                'id' => $user->id,
-                'firstname' => $user->name,
-                'email' => $user->email,
-                'role' => $user->role
-            ]
+            'user' => $user->only('id', 'name', 'email', 'role')
         ]);
     }
 

@@ -36,6 +36,7 @@ export default function ProductList() {
     setTimeout(() => setShowAlert(false), 3000);
   };
 
+<<<<<<< HEAD
   return (
     <section className="products-section">
       <Alert message="Produit ajouté au panier !" show={showAlert} />
@@ -58,6 +59,26 @@ export default function ProductList() {
               <p className="product-price-range">
                 {formatPriceRange(prod)}
               </p>
+=======
+            <h2 className="section-title">Produits</h2>
+            <div className="products-grid">
+                {products.slice(0, 8).map((prod) => (
+                    <div key={prod.id} className="product-card">
+                        <img
+                            src={`http://127.0.0.1:8000/assets/images/products/${prod.image_url}`}
+                            alt={prod.name}
+                            className="product-image"
+                        />
+                        <p className="product-name">{prod.name}</p>
+                        <button
+                            onClick={() => handleAddToCart(prod)}
+                            className="add-button"
+                        >
+                            Ajouter au panier
+                        </button>
+                    </div>
+                ))}
+>>>>>>> parent of 9e4f7e6 (commit hugo Login/Login admin)
             </div>
 
             <div className="product-meta">

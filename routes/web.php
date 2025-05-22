@@ -2,17 +2,13 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Admin\AdminProductController;
-use App\Http\Controllers\Admin\AuthController as AdminAuthController;
 
-// 🏠 Page d’accueil publique
-Route::get('/', function () {
-    return view('public'); // une vue simple genre bouton "accès admin"
-});
+// 🏠 Redirection vers la page d'accueil de l'admin
+Route::redirect('/', '/admin');
 
-// 🔁 Fix Laravel pour les redirections internes
-Route::get('/login', fn() => redirect()->route('admin.login'))->name('login');
 
-// 📁 Groupe admin
+
+// 📁 Groupe de routes admin (prefix: /admin | name: admin.)
 Route::prefix('admin')->name('admin.')->group(function () {
 
     // 🔒 Routes admin protégées par authentification

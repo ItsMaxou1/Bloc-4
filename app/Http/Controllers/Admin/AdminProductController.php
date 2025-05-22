@@ -115,11 +115,6 @@ class AdminProductController extends Controller
 
     public function dashboard()
     {
-        // ✅ Vérification : seul un admin connecté peut accéder
-        if (!auth()->check() || auth()->user()->role !== 'admin') {
-            return redirect()->route('admin.login')->withErrors(['email' => 'Accès interdit.']);
-        }
-
         // Récupérer les données nécessaires
         $totalRevenue = Order::sum('total_included_tax'); // Revenu total des commandes
         $ordersCount = Order::count(); // Nombre total de commandes
@@ -129,10 +124,12 @@ class AdminProductController extends Controller
         $totalSessions = DB::table('sessions')->count();
         $usersCount = User::count(); // Nombre total d'utilisateurs inscrits
 
+        // Répartition des ventes par format (si nécessaire)
         $salesByFormat = ProductVariant::selectRaw('format, sum(price) as sales')
             ->groupBy('format')
             ->get();
 
+        // Passer les données à la vue
         return view('admin.welcome', [
             'totalRevenue' => $totalRevenue,
             'ordersCount' => $ordersCount,

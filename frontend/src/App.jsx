@@ -6,21 +6,16 @@ import { Routes, Route } from "react-router-dom";
 import RegisterForm from "./components/Auth/RegisterForm";
 import LoginForm from "./components/Auth/LoginForm";
 import Cart from "./components/Cart/Cart";
-import Navbar from "./components/Navbar/Navbar";
-import Footer from "./components/Footer/Footer";
-import Profile from "./pages/profile";
 
 const App = () => {
     return (
-        <div className="page-container">
-            <Navbar />
-            <main className="content-wrap">
-                <Routes>
-                    <Route path="/" element={<HomePage />} />
-                    <Route path="/shop" element={<ShopPage />} />
+        <Routes>
+            <Route path="/" element={<HomePage />} />
+            <Route path="/shop" element={<ShopPage />} />
 
             <Route path="/cart" element={<Cart />} />
 
+<<<<<<< HEAD
                     <Route path="/cart" element={<Cart />} />
                     <Route
                         path="/shop/product/:id"
@@ -34,6 +29,11 @@ const App = () => {
             </main>
             <Footer />
         </div>
+=======
+            <Route path="/register" element={<RegisterForm />} />
+            <Route path="/login" element={<LoginForm />} />
+        </Routes>
+>>>>>>> parent of 9e4f7e6 (commit hugo Login/Login admin)
     );
 };
 

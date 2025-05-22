@@ -1,7 +1,6 @@
-import React, { useState, useContext } from "react";
+import React, { useState } from "react";
 import axios from "axios";
 import { useNavigate, Link } from "react-router-dom";
-import { AuthContext } from "../../context/AuthContext"; // ✅ important
 import "./Auth.css";
 
 const LoginForm = () => {
@@ -12,7 +11,6 @@ const LoginForm = () => {
 
     const [message, setMessage] = useState("");
     const navigate = useNavigate();
-    const { setUser } = useContext(AuthContext); // ✅ récupération de setUser
 
     const handleChange = (e) => {
         setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -29,18 +27,10 @@ const LoginForm = () => {
 
             setMessage(response.data.message);
 
-            // ✅ Avatar manga par défaut
-            const userData = {
-                firstname: response.data.user.firstname,
-                avatar: "/images/warwick.png",
-            };
-
-            // ✅ Stockage & mise à jour du contexte
-            localStorage.setItem("user", JSON.stringify(userData));
-            setUser(userData);
-
-            // ✅ Redirection vers l'accueil
-            navigate("/");
+            // Redirection après 1 seconde
+            setTimeout(() => {
+                navigate("/");
+            }, 1000);
         } catch (error) {
             if (error.response?.status === 401) {
                 setMessage("Email ou mot de passe invalide.");

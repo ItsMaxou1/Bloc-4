@@ -26,6 +26,7 @@ class ProductController extends Controller
     }
 
 
+<<<<<<< HEAD
     public function show($id): JsonResponse
     {
         // Charge le produit + ses variantes
@@ -33,6 +34,10 @@ class ProductController extends Controller
 
         return response()->json($product);
     }
+=======
+    // public function show(Product $product)
+    // {
+>>>>>>> parent of 9e4f7e6 (commit hugo Login/Login admin)
 
     //     return response()->json([
     //         'produit' => $product->load('category', 'product_variants'),

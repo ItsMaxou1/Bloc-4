@@ -12,6 +12,7 @@ function Cart() {
     decreaseQuantity,
   } = useContext(CartContext);
 
+<<<<<<< HEAD
   const total = cart.reduce((sum, item) => {
     const unitPrice =
       item.price ??
@@ -19,6 +20,23 @@ function Cart() {
       0;
     return sum + unitPrice * item.quantity;
   }, 0);
+=======
+    const total = cart.reduce(
+        (sum, item) => sum + item.price * item.quantity,
+        0
+    );
+
+    if (cart.length === 0) {
+        return (
+            <div className="cart-container">
+                <div className="back-button">
+                    <Link to="/">← Retour à l'accueil</Link>
+                </div>
+                <p className="empty-cart">Votre panier est vide.</p>
+            </div>
+        );
+    }
+>>>>>>> parent of 9e4f7e6 (commit hugo Login/Login admin)
 
   if (cart.length === 0) {
     return (

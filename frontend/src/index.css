@@ -34,18 +34,3 @@ h2{
 h3{
   font-size: 19px;
 }
-
-html, body, #root {
-    height: 100%;
-    margin: 0;
-}
-
-.page-container {
-    display: flex;
-    flex-direction: column;
-    min-height: 100vh; /* toute la hauteur de la fenêtre */
-}
-
-.content-wrap {
-    flex: 1; /* pousse le footer en bas */
-}
