@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Admin\AdminOrderController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Admin\AdminProductController;
 
@@ -11,22 +12,21 @@ Route::redirect('/', '/admin');
 // 📁 Groupe de routes admin (prefix: /admin | name: admin.)
 Route::prefix('admin')->name('admin.')->group(function () {
 
-    // 🔒 Routes admin protégées par authentification
-    // 👇 Quand tu remettras la protection plus tard :
-    // Route::middleware(['auth', 'role:admin'])->group(function () {
-    //     Route::get('/', [AdminProductController::class, 'dashboard'])->name('welcome');
-    //     Route::resource('products', AdminProductController::class); // version raccourcie
-    // });
+    Route::get('orders', [AdminOrderController::class, 'index'])
+        ->name('orders.index');
 
+    // 👁️ Formulaire de connexion sur /admin
+    Route::get('/', [AdminAuthController::class, 'showLoginForm'])->name('login');
 
-    // 🔓 Routes admin accessibles sans authentification (pour le dev)
+    // 🔐 Connexion / déconnexion
+    Route::post('/login', [AdminAuthController::class, 'login'])->name('login.submit');
+    Route::post('/logout', [AdminAuthController::class, 'logout'])->name('logout');
 
-    // 🏠 Accueil admin (dashboard)
-    Route::get('/', [AdminProductController::class, 'dashboard'])->name('welcome');
-    Route::get('database/export', [AdminProductController::class, 'exportDatabase'])->name('database.export');
-    Route::post('database/import', [AdminProductController::class, 'importDatabase'])->name('database.import');
+    // 🔒 Accès aux fonctionnalités admin après connexion
+    Route::middleware('auth')->group(function () {
 
-
+        // 🏠 Dashboard (protégé dans le contrôleur)
+        Route::get('/dashboard', [AdminProductController::class, 'dashboard'])->name('welcome');
 
     // 📦 CRUD Produits
     Route::get('/products', [AdminProductController::class, 'index'])->name('products.index');             // Liste des produits

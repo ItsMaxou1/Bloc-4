@@ -35,9 +35,9 @@ export default function ProductDetail() {
       .catch((err) => console.error("Fetch product error:", err));
   }, [id]);
 
-  if (!product || !selectedVariant) {
-    return <p>Chargement du produit…</p>;
-  }
+    if (!product || !selectedVariant) {
+        return <p>Chargement du produit…</p>;
+    }
 
   // Même logique de détection pour l'affichage
   const variants =

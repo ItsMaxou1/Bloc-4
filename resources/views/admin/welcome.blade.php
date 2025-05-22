@@ -15,9 +15,9 @@
             <h2>🍺 Admin</h2>
             <nav>
                 <ul>
-                    <li><a href="{{ route('admin.welcome') }}" class="active">Dashboard</a></li>
+                    <li><a href="{{ route('admin.welcome') }}">Dashboard</a></li>
                     <li><a href="{{ route('admin.products.index') }}">Produits</a></li>
-                    <li><a href="#">Catégories</a></li>
+                    <li><a href="{{ route('admin.orders.index') }}">Commandes</a></li>
                 </ul>
             </nav>
         </aside>
