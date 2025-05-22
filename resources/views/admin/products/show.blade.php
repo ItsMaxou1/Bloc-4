@@ -17,12 +17,6 @@
             <p>{{ $product->short_description ?? 'Non renseignée' }}</p>
         </div>
 
-        <div class="mb-3">
-            <p><strong>Prix :</strong>
-                {{ $product->price ? number_format($product->price, 2, ',', ' ') . ' €' : 'Non renseigné' }}
-            </p>
-        </div>
-
         <div class="d-flex gap-2">
             <!-- <a href="{{ route('admin.products.edit', $product) }}" class="btn btn-warning">Modifier</a> -->
             <a href="{{ route('admin.products.index') }}" class="btn btn-secondary">Retour</a>

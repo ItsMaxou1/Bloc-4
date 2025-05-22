@@ -1,72 +1,30 @@
 <?php
+
 namespace App\Http\Controllers\Admin;
 
 use App\Models\User;
 use App\Models\Category;
 use App\Models\Product;
 use App\Models\ProductVariant;
+use App\Models\Order;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\ProductStoreRequest;
-use Illuminate\Http\Request;
-use App\Models\Order;
-use Illuminate\Support\Facades\DB;
+use App\Http\Requests\ProductUpdateRequest;
+use Symfony\Component\HttpFoundation\StreamedResponse;
 
 class AdminProductController extends Controller
 {
     public function index(Request $request)
     {
-        // On commence par la requête sur les produits
         $query = Product::query();
 
-        // Si une catégorie est sélectionnée, on filtre les produits
-        if ($request->has('category_id') && $request->category_id != '') {
+        if ($request->filled('category_id')) {
             $query->where('category_id', $request->category_id);
         }
 
-        $products = $query->paginate(20)->appends($request->query()); // On pagine les produits
-
-        // dd($products);
-
-        return view('admin.products.index', [
-            'products' => $products,
-            'categories' => Category::all(),
-        ]);
-    }
-
-    public function show(Product $product)
-    {
-        return view('admin.products.show', compact('product'));
-    }
-
-    public function store(ProductStoreRequest $request)
-    {
-        $validated = $request->validated();
-        $validated['available'] = isset($validated['available']);
-        $validated['cover'] = "https://blog.tubikstudio.com/wp-content/uploads/2019/03/cover-1.png";
-
-        // Création du produit
-        $product = Product::create($validated);
-
-        // Sauvegarde des variants associés (s’ils existent dans la requête)
-        if ($request->has('variants') && is_array($request->variants)) {
-            foreach ($request->variants as $variantData) {
-                // On vérifie que les champs essentiels sont là
-                if (
-                    isset($variantData['format']) &&
-                    isset($variantData['price']) &&
-                    isset($variantData['stock'])
-                ) {
-                    $product->variants()->create([
-                        'format' => $variantData['format'],
-                        'price' => $variantData['price'],
-                        'stock' => $variantData['stock'],
-                    ]);
-                }
-            }
-        }
-
-        // Récupérer la liste mise à jour des produits
-        $products = Product::paginate(20);
+        $products = $query->paginate(20)->appends($request->query());
 
         return view('admin.products.index', [
             'products' => $products,
@@ -77,9 +35,37 @@ class AdminProductController extends Controller
     public function create()
     {
         return view('admin.products.create', [
-            'categories' => \App\Models\Category::all(),
-            'brands' => \App\Models\Brand::all(), // si tu as une table Brand, sinon tu retires cette ligne
+            'categories' => Category::all(),
+            'brands' => \App\Models\Brand::all(),
         ]);
+    }
+
+    public function store(ProductStoreRequest $request)
+    {
+        $data = $request->validated();
+        $data['available'] = $request->has('available');
+        $data['cover'] = $data['cover'] ?? 'https://blog.tubikstudio.com/...';
+
+        $product = Product::create($data);
+
+        if (!empty($data['variants'])) {
+            foreach ($data['variants'] as $variant) {
+                $product->variants()->create([
+                    'format' => $variant['format'],
+                    'price' => $variant['price'],
+                    'stock' => $variant['stock'],
+                ]);
+            }
+        }
+
+        return redirect()
+            ->route('admin.products.index')
+            ->with('success', 'Produit créé avec succès.');
+    }
+
+    public function show(Product $product)
+    {
+        return view('admin.products.show', compact('product'));
     }
 
     public function edit(Product $product)
@@ -88,56 +74,44 @@ class AdminProductController extends Controller
             'product' => $product,
             'categories' => Category::all(),
             'brands' => \App\Models\Brand::all(),
-            'variants' => $product->variants, // on charge les variants associés
+            'variants' => $product->variants,
         ]);
     }
 
-    public function update(ProductStoreRequest $request, $id)
+    public function update(ProductUpdateRequest $request, Product $product)
     {
-        // Récupérer le produit à mettre à jour
-        $product = Product::findOrFail($id);
+        $data = $request->validated();
+        $data['available'] = $request->has('available');
 
-        // Valider les données du formulaire
-        $validated = $request->validated();
-        $validated['available'] = isset($validated['available']);
-
-        // Si une nouvelle image est uploadée, on met à jour l'URL de l'image
         if ($request->hasFile('cover')) {
-            $coverPath = $request->file('cover')->store('covers', 'public');
-            $validated['cover'] = asset('storage/' . $coverPath);
+            $path = $request->file('cover')->store('covers', 'public');
+            $data['cover'] = asset('storage/' . $path);
         }
 
-        // Mettre à jour le produit
-        $product->update($validated);
+        $product->update($data);
 
-        // Mise à jour des variants
-        if (isset($validated['variants'])) {
-            foreach ($validated['variants'] as $index => $variantData) {
-                // Si le produit a déjà un variant, on le met à jour
-                if (isset($variantData['id'])) {
-                    $variant = $product->productVariants()->find($variantData['id']);
-                    if ($variant) {
-                        $variant->update($variantData);
-                    }
+        if (!empty($data['variants'])) {
+            foreach ($data['variants'] as $variantData) {
+                if (!empty($variantData['id'])) {
+                    $variant = $product->variants()->find($variantData['id']);
+                    $variant->update($variantData);
                 } else {
-                    // Sinon, on crée un nouveau variant
-                    $product->productVariants()->create($variantData);
+                    $product->variants()->create($variantData);
                 }
             }
         }
 
-        // Rediriger vers la page des produits avec un message de succès
-        return redirect()->route('admin.products.index')->with('success', 'Produit mis à jour avec succès.');
+        return redirect()
+            ->route('admin.products.index')
+            ->with('success', 'Produit mis à jour avec succès.');
     }
-
 
     public function destroy(Product $product)
     {
-        $product->delete(); // Supprime le produit
+        $product->delete();
 
         return redirect()->route('admin.products.index');
     }
-
 
     public function dashboard()
     {
@@ -168,15 +142,9 @@ class AdminProductController extends Controller
             'salesByFormat' => $salesByFormat,
         ]);
     }
-
 }
 
-/*
-<?php
-namespace App\Http\Controllers\Admin;
-
-use App\Models\Category;
-use App\Models\ProductVariant; // Importer le modèle ProductVariant
+/*tVariant; // Importer le modèle ProductVariant
 use App\Models\Order;
 use App\Models\Session;
 use App\Models\User;
@@ -246,8 +214,4 @@ class AdminProductController extends Controller
             'salesByFormat' => $salesByFormat,
         ]);
     }
-
-
-
 }
-*/

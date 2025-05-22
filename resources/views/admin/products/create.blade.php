@@ -19,12 +19,6 @@
                 <textarea name="description" required></textarea>
             </div>
 
-            <!-- Prix de base -->
-            <div>
-                <label>Prix (€)</label>
-                <input type="number" name="price" step="0.01" required>
-            </div>
-
             <!-- Alcool Volume -->
             <div>
                 <label>Taux d'alcool (%)</label>
@@ -77,17 +71,17 @@
             const index = container.children.length;
 
             const variantHTML = `
-                    <div style="margin-top: 10px; padding: 10px; border: 1px solid #ccc;">
-                        <label>Format</label>
-                        <input type="text" name="variants[${index}][format]" required>
+                        <div style="margin-top: 10px; padding: 10px; border: 1px solid #ccc;">
+                            <label>Format</label>
+                            <input type="text" name="variants[${index}][format]" required>
 
-                        <label>Prix (€)</label>
-                        <input type="number" name="variants[${index}][price]" step="0.01" required>
+                            <label>Prix (€)</label>
+                            <input type="number" name="variants[${index}][price]" step="0.01" required>
 
-                        <label>Stock</label>
-                        <input type="number" name="variants[${index}][stock]" required>
-                    </div>
-                `;
+                            <label>Stock</label>
+                            <input type="number" name="variants[${index}][stock]" required>
+                        </div>
+                    `;
 
             container.insertAdjacentHTML('beforeend', variantHTML);
         }

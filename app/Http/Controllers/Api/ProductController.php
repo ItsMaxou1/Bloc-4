@@ -10,26 +10,21 @@ class ProductController extends Controller
 {
     public function index(Request $request)
     {
-        // Démarre la requête avec les relations
+        // Construire la requête avec la relation des variants
         $query = Product::with('productVariants');
 
-        // 🔍 Filtrer par catégorie si elle est spécifiée
+        // Appliquer le filtre par catégorie si présent
         if ($request->has('category_id') && $request->category_id !== '') {
             $query->where('category_id', $request->category_id);
         }
 
-        // 🔍 Filtrer par terme de recherche si spécifié
-        if ($request->has('search') && $request->search !== '') {
-            $search = $request->search;
-            $query->where('name', 'LIKE', "%{$search}%");
-        }
-
-        // Récupérer les produits filtrés
+        // Récupérer tous les produits filtrés
         $products = $query->get();
 
-        // Retourner la réponse JSON
+        // Retourner directement le tableau JSON de produits
         return response()->json($products, 200);
     }
+
 
     public function show($id): JsonResponse
     {

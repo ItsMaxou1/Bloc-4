@@ -102,6 +102,23 @@
                 </tbody>
             </table>
 
+            <!-- Import/Export BD -->
+            <div class="db-buttons">
+                <!-- Export via GET -->
+                <a href="{{ route('admin.database.export') }}" class="btn btn-export">
+                    Exporter la base de données
+                </a>
+
+                <!-- Import -->
+                <form action="{{ route('admin.database.import') }}" method="post" enctype="multipart/form-data">
+                    @csrf
+                    <input type="file" name="sql_file" required>
+                    <button type="submit" class="btn btn-import">
+                        Importer la base de données
+                    </button>
+                </form>
+            </div>
+
         </main>
     </div>
 </body>
