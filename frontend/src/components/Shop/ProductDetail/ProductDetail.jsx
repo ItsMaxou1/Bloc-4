@@ -7,109 +7,115 @@ import Navbar from "../../Home/Navbar/Navbar";
 import { CartContext } from "../../../context/CartContext.jsx";
 
 export default function ProductDetail() {
-  const { id } = useParams();
-  const [product, setProduct] = useState(null);
-  const [selectedVariant, setSelectedVariant] = useState(null);
-  const { addToCart } = useContext(CartContext);
+    const { id } = useParams();
+    const [product, setProduct] = useState(null);
+    const [selectedVariant, setSelectedVariant] = useState(null);
+    const { addToCart } = useContext(CartContext);
 
-  useEffect(() => {
-    fetch(`http://127.0.0.1:8000/api/products/${id}`)
-      .then((res) => {
-        if (!res.ok) throw new Error(`HTTP status ${res.status}`);
-        return res.json();
-      })
-      .then((data) => {
-        setProduct(data);
-        // on récupère la liste des variantes, quel que soit le nom
-        const variants =
-          data.variants ||
-          data.productVariants ||
-          data.product_variants ||
-          [];
+    useEffect(() => {
+        fetch(`http://127.0.0.1:8000/api/products/${id}`)
+            .then((res) => {
+                if (!res.ok) throw new Error(`HTTP status ${res.status}`);
+                return res.json();
+            })
+            .then((data) => {
+                setProduct(data);
+                const variants =
+                    data.variants ||
+                    data.productVariants ||
+                    data.product_variants ||
+                    [];
 
-        if (variants.length) {
-          setSelectedVariant(variants[0]);
-        }
-      })
-      .catch((err) => console.error("Fetch product error:", err));
-  }, [id]);
+                if (variants.length) {
+                    setSelectedVariant(variants[0]);
+                }
+            })
+            .catch((err) => console.error("Fetch product error:", err));
+    }, [id]);
 
-  // on attend d'avoir le produit ET une variante
-  if (!product || !selectedVariant) {
-    return <p>Chargement du produit…</p>;
-  }
+    if (!product || !selectedVariant) {
+        return <p>Chargement du produit…</p>;
+    }
 
-  // même logique de récupération pour l'affichage
-  const variants =
-    product.variants ||
-    product.productVariants ||
-    product.product_variants ||
-    [];
+    const variants =
+        product.variants ||
+        product.productVariants ||
+        product.product_variants ||
+        [];
 
-  return (
-    <>
-      <Navbar />
+    return (
+        <>
+            <Navbar />
 
-      <section className="product-detail">
-        <h1 className="product-title">{product.name}</h1>
+            <section className="product-detail">
+                <h1 className="product-title">{product.name}</h1>
 
-        <div className="product-main">
-          {/* 1. Image à gauche */}
-          <img
-            className="product-main-image"
-            src={`http://127.0.0.1:8000/assets/images/products/${product.image_url}`}
-            alt={product.name}
-          />
+                <div className="product-main">
+                    {/* Image produit */}
+                    <img
+                        className="product-main-image"
+                        src={`http://127.0.0.1:8000/assets/images/products/${product.image_url}`}
+                        alt={product.name}
+                    />
 
-          {/* 2. Infos à droite */}
-          <div className="product-info">
-            {/* Sélecteur de format */}
-            <label htmlFor="format-select">Format&nbsp;:</label>
-            <select
-              id="format-select"
-              value={selectedVariant.id}
-              onChange={(e) => {
-                const v = variants.find(
-                  (v) => v.id === Number(e.target.value)
-                );
-                setSelectedVariant(v);
-              }}
-            >
-              {variants.map((v) => (
-                <option key={v.id} value={v.id}>
-                  {v.format}
-                </option>
-              ))}
-            </select>
+                    {/* Infos produit */}
+                    <div className="product-info">
+                        {/* Format */}
+                        <label htmlFor="format-select">Format&nbsp;:</label>
+                        <select
+                            id="format-select"
+                            value={selectedVariant.id}
+                            onChange={(e) => {
+                                const v = variants.find(
+                                    (v) => v.id === Number(e.target.value)
+                                );
+                                setSelectedVariant(v);
+                            }}
+                        >
+                            {variants.map((v) => (
+                                <option key={v.id} value={v.id}>
+                                    {v.format}
+                                </option>
+                            ))}
+                        </select>
 
-            {/* Prix et stock */}
-            <p className="product-price">{selectedVariant.price} €</p>
-            <p className="product-stock">
-              Stock : {selectedVariant.stock}
-            </p>
+                        {/* Prix, stock, alcool */}
+                        <p className="product-price">
+                            {selectedVariant.price} €
+                        </p>
+                        <p className="product-stock">
+                            Stock : {selectedVariant.stock}
+                        </p>
 
-            {/* Short description */}
-            {product.short_description && (
-              <p className="product-short-desc">
-                {product.short_description}
-              </p>
-            )}
+                        {product.alcool_volume && (
+                            <p className="product-alcohol-rate">
+                                Taux d’alcool : {product.alcool_volume}%
+                            </p>
+                        )}
 
-            {/* Full description */}
-            {product.description && (
-              <p className="product-description">{product.description}</p>
-            )}
+                        {/* Descriptions */}
+                        {product.short_description && (
+                            <p className="product-short-desc">
+                                {product.short_description}
+                            </p>
+                        )}
 
-            {/* Bouton Ajouter au panier */}
-            <button
-              onClick={() => addToCart(product, selectedVariant)}
-              className="add-button"
-            >
-              Ajouter au panier
-            </button>
-          </div>
-        </div>
-      </section>
-    </>
-  );
+                        {product.description && (
+                            <p className="product-description">
+                                {product.description}
+                            </p>
+                        )}
+
+                        {/* Bouton panier */}
+                        <button
+                            onClick={() => addToCart(product, selectedVariant)}
+                            className="add-button"
+                        >
+                            Ajouter au panier
+                        </button>
+                    </div>
+                </div>
+            </section>
+        </>
+    );
 }

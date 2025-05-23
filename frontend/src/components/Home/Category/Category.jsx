@@ -35,13 +35,6 @@ const categories = [
         description:
             "Amère et fruitée, incontournable pour les amateurs de houblon.",
     },
-    {
-        image: image5,
-        link: "/mousstache",
-        title: "Bière Mousstache",
-        description:
-            "Une recette originale et unique pour une expérience surprenante.",
-    },
 ];
 
 function Category() {

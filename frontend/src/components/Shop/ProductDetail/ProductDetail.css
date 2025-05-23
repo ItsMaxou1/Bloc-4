@@ -20,6 +20,13 @@
     align-items: center;
     gap: 2rem;
   }
+
+  .product-alcohol-rate {
+  font-weight: 500;
+  color: #444;
+  margin-top: 5px;
+}
+
   
   /* On larger screens, place image and info side by side */
   @media (min-width: 768px) {
