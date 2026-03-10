@@ -25,3 +25,4 @@ frontend/node_modules/.vite/deps/react-slideshow-image.js.map
 composer.lock
 composer.json
 public/phpinfo.php
+.env 

@@ -1,0 +1,1 @@
+nixpacks = ["php82", "php82Extensions.pdo_mysql"]

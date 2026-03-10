@@ -9,6 +9,8 @@ import Cart          from "./components/Cart/Cart";
 import RegisterForm  from "./components/Auth/RegisterForm";
 import LoginForm     from "./components/Auth/LoginForm";
 import Profile from "./pages/profil";
+import CheckoutPage  from "./pages/checkout";
+import Confirmation  from "./pages/Confirmation";
 
 export default function App() {
   return (
@@ -20,6 +22,10 @@ export default function App() {
       <Route path="/shop" element={<ShopPage />} />
       {/* Détail produit : c’est ici que useParams().id sera défini */}
       <Route path="/shop/product/:id" element={<ProductDetail />} />
+
+      <Route path="/checkout" element={<CheckoutPage />} />
+
+      <Route path="/confirmation" element={<Confirmation />} />
 
       {/* Panier */}
       <Route path="/cart" element={<Cart />} />

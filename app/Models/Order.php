@@ -18,7 +18,8 @@ class Order extends Model
         'total_without_tax',
         'tax_amount',
         'total_included_tax',
-        'status'
+        'status',
+        'soutenance'
     ];
 
     // Définir les relations, ici un ordre appartient à un utilisateur
