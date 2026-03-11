@@ -20,8 +20,7 @@ yarn-error.log
 /.nova
 /.vscode
 /.zed
-frontend/node_modules/.vite/deps/_metadata.json
-frontend/node_modules/.vite/deps/react-slideshow-image.js.map
+frontend/node_modules/
 composer.lock
 composer.json
 public/phpinfo.php
