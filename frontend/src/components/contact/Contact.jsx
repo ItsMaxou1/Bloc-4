@@ -13,6 +13,7 @@ const Contact = () => {
     const handleChange = (e) => {
         setFormData({ ...formData, [e.target.name]: e.target.value });
     };
+    //ok
 
     const handleSubmit = (e) => {
         e.preventDefault();
