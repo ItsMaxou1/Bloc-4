@@ -20,6 +20,7 @@ const Contact = () => {
         setSent(true);
     };
 
+    //ok
     return (
         <div className="contact-page">
             <div className="contact-hero">
