@@ -7,20 +7,18 @@ export default function ProductList() {
   const [products, setProducts] = useState([]);
   const [showAlert, setShowAlert] = useState(false);
   const { addToCart } = useContext(CartContext);
+  const API_URL = import.meta.env.VITE_API_URL;
 
   useEffect(() => {
-    fetch("http://localhost:8000/api/products")
+    fetch(`${API_URL}/api/products`)
       .then((res) => {
         if (!res.ok) throw new Error(`HTTP ${res.status}`);
         return res.json();
       })
       .then((data) => setProducts(data))
-      .catch(() => {
-        // gestion d'erreur si nécessaire
-      });
+      .catch(() => {});
   }, []);
 
-  // Calcul min–max des prix
   const formatPriceRange = (prod) => {
     const variants = prod.product_variants;
     if (!variants || variants.length === 0) return "";
@@ -39,27 +37,22 @@ export default function ProductList() {
   return (
     <section className="products-section">
       <Alert message="Produit ajouté au panier !" show={showAlert} />
-
       <h2 className="section-title">Produits</h2>
       <div className="products-grid">
         {products.slice(0, 8).map((prod) => (
           <div key={prod.id} className="product-card">
             <img
-              src={`http://127.0.0.1:8000/assets/images/products/${prod.image_url}`}
+              src={`${API_URL}/assets/images/products/${prod.image_url}`}
               alt={prod.name}
               className="product-image"
             />
-
             <div className="product-info">
               <p className="product-name">{prod.name}</p>
               <p className="product-category">
                 {prod.category?.name ?? "Catégorie inconnue"}
               </p>
-              <p className="product-price-range">
-                {formatPriceRange(prod)}
-              </p>
+              <p className="product-price-range">{formatPriceRange(prod)}</p>
             </div>
-
             <div className="product-meta">
               <button onClick={() => handleAdd(prod)} className="add-button">
                 Ajouter

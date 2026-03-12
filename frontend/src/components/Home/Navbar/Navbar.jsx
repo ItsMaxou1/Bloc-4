@@ -18,6 +18,7 @@ const Navbar = () => {
     const [searchTerm, setSearchTerm] = useState("");
     const [results, setResults] = useState([]);
     const navigate = useNavigate();
+    const API_URL = import.meta.env.VITE_API_URL;
 
     const { cart } = useContext(CartContext);
     const { user } = useContext(AuthContext);
@@ -33,9 +34,7 @@ const Navbar = () => {
 
             try {
                 const response = await fetch(
-                    `http://localhost:8000/api/products?search=${encodeURIComponent(
-                        searchTerm
-                    )}`
+                    `${API_URL}/api/products?search=${encodeURIComponent(searchTerm)}`
                 );
                 const data = await response.json();
                 setResults(data);
@@ -68,7 +67,6 @@ const Navbar = () => {
                 </div>
 
                 <div className="navbar-icon">
-                    {/* Barre de recherche */}
                     <div style={{ position: "relative" }}>
                         <input
                             type="text"
@@ -127,17 +125,10 @@ const Navbar = () => {
                                                 flexDirection: "column",
                                             }}
                                         >
-                                            <span
-                                                style={{ fontWeight: "bold" }}
-                                            >
+                                            <span style={{ fontWeight: "bold" }}>
                                                 {product.name}
                                             </span>
-                                            <span
-                                                style={{
-                                                    fontSize: "0.9em",
-                                                    color: "#666",
-                                                }}
-                                            >
+                                            <span style={{ fontSize: "0.9em", color: "#666" }}>
                                                 {product.price} €
                                             </span>
                                         </Link>
@@ -147,7 +138,6 @@ const Navbar = () => {
                         )}
                     </div>
 
-                    {/* Panier */}
                     <div style={{ position: "relative" }}>
                         <img
                             src={panierIcon}
@@ -162,7 +152,6 @@ const Navbar = () => {
                         )}
                     </div>
 
-                    {/* Utilisateur connecté ou non */}
                     {user ? (
                         <div
                             onClick={() => navigate("/profile")}
