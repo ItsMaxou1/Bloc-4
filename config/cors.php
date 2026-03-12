@@ -8,6 +8,7 @@ return [
     'allowed_origins' => [
         'http://localhost:5173',
         'http://localhost:3000',
+        'https://bloc-4-frontend-production.up.railway.app',
     ],
 
     'allowed_origins_patterns' => [],
